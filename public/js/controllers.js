@@ -41,11 +41,15 @@ angular.module('TradeUnion')
         };
 
         $scope.saveWorker = function() {
-            $scope.entry.$save();
+            Worker.update({id: $scope.entry.id}, $scope.entry);
         };
 
         $scope.editWorker = function(record) {
-            $scope.entry = new Worker();
+            //$scope.entry = new Worker();
             $scope.entry = record;
+        };
+
+        $scope.deleteWorker = function($id) {
+
         };
     });

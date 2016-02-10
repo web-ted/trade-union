@@ -38,7 +38,8 @@ class WorkerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $worker = new Worker();
+        return $worker->save($request->all());
     }
 
     /**
@@ -72,7 +73,7 @@ class WorkerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return Worker::where('id', $id)->update($request->all());
     }
 
     /**
@@ -83,6 +84,6 @@ class WorkerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Worker::delete($id);
     }
 }

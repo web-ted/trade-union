@@ -3,5 +3,7 @@
  */
 angular.module('TradeUnion')
     .factory('Worker', function($resource) {
-       return $resource('/worker/:id');
+       return $resource('/worker/:id', null, {
+           'update': { method: 'PUT' }
+       });
     });

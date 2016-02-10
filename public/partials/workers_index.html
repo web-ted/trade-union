@@ -69,7 +69,7 @@
                         <button type="button" class="btn btn-default" aria-label="Edit Worker" ng-click="editWorker(worker)" data-toggle="modal" data-target="#editWorker">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </button>
-                        <button type="button" class="btn btn-default" aria-label="Delete Worker">
+                        <button type="button" class="btn btn-default" aria-label="Delete Worker" data-toggle="modal" data-target="#confirmWorkerDeletion">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </button>
                     </td>
@@ -100,7 +100,7 @@
     </div>
 </div>
 
-<!-- Edit User Modal -->
+<!-- Edit Worker Modal -->
 <div class="modal fade" id="editWorker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -115,7 +115,26 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="saveWorker()">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="saveWorker()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm Worker Deletion Modal -->
+<div class="modal fade" id="confirmWorkerDeletion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="confirmLabel">Confirm Deletion</h4>
+            </div>
+            <div class="modal-body">
+                Delete worker {{entry.first_name}} {{entry.last_name}}?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="deleteWorker(worker.id)">Delete</button>
             </div>
         </div>
     </div>
