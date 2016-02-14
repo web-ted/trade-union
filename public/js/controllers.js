@@ -6,14 +6,14 @@ angular.module('TradeUnion')
         $scope.workers =  Worker.query();
         $scope.currentPage = 1;
         $scope.begin = 1;
-        $scope.itemsPerPage = 6;
+        $scope.itemsPerPage = 5;
         $scope.rotate = true;
         $scope.forceEclipses = true;
         $scope.boundaryLinks = true;
         $scope.maxSize = 5;
         $scope.showPagination = true;
-        // $scope.predicate = 'last_name';
-        // $scope.reverse = false;
+        //$scope.predicate = 'last_name';
+        //$scope.reverse = false;
 
         $scope.clearSearch = function() {
             $scope.search = '';
@@ -30,23 +30,32 @@ angular.module('TradeUnion')
             }
         };
 
-        $scope.setPage = function () {
-            $scope.begin = ($scope.itemsPerPage * ($scope.currentPage-1))+1;
+        $scope.setPage = function (page) {
+            $scope.begin = ($scope.itemsPerPage * (page-1));
             $scope.showPagination = true;
         };
 
         $scope.order = function(predicate) {
             $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
             $scope.predicate = predicate;
+            $scope.begin = 0;
         };
 
-        $scope.saveWorker = function() {
-            Worker.update({id: $scope.entry.id}, $scope.entry);
+        $scope.updateWorker = function(record) {
+            Worker.update({id: record.id}, record);
+        };
+
+        $scope.createWorker = function(record) {
+            Worker.save({id: record.id}, record);
         };
 
         $scope.editWorker = function(record) {
-            //$scope.entry = new Worker();
             $scope.entry = record;
+        };
+
+        $scope.newWorker = function() {
+            // $scope.entry = Worker.defaults();
+            console.log(Worker.create())
         };
 
         $scope.deleteWorker = function($id) {
