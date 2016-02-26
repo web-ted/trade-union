@@ -27,7 +27,7 @@ class WorkerController extends Controller
      */
     public function create()
     {
-        //
+        return Worker::findOrNew(0);
     }
 
     /**
@@ -84,6 +84,6 @@ class WorkerController extends Controller
      */
     public function destroy($id)
     {
-        return Worker::delete($id);
+        return Worker::where('id', $id)->delete();
     }
 }
