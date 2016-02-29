@@ -11,4 +11,24 @@ angular.module('TradeUnion')
                isArray: true
            }
        });
+    })
+    .factory('Specialty', function($resource) {
+        return $resource('/specialty/:id', null, {
+            'update': { method: 'PUT' },
+            'create': {
+                url: '/specialty/create',
+                method: 'GET',
+                isArray: true
+            }
+        });
+    })
+    .factory('Enterprise', function($resource) {
+        return $resource('/enterprise/:id', null, {
+            'update': { method: 'PUT' },
+            'create': {
+                url: '/enterprise/create',
+                method: 'GET',
+                isArray: true
+            }
+        });
     });

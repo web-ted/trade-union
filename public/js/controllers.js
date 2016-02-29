@@ -2,8 +2,10 @@
  * Created by sulimo on 17/1/2016.
  */
 angular.module('TradeUnion')
-    .controller('WorkersController', function($scope, Worker) {
+    .controller('WorkersController', function($scope, Worker, Specialty, Enterprise) {
         $scope.workers =  Worker.query();
+        $scope.specialties = Specialty.query();
+        $scope.enterprises = Enterprise.query();
         $scope.currentPage = 1;
         $scope.begin = 1;
         $scope.itemsPerPage = 5;
@@ -14,6 +16,17 @@ angular.module('TradeUnion')
         $scope.showPagination = true;
         //$scope.predicate = 'last_name';
         //$scope.reverse = false;
+
+        $scope.reloadMembers = function() {
+            $scope.reloading = true;
+            $scope.workers =  Worker.query({}, function() {
+                $scope.reloading = false;
+            }, function() {
+                $scope.reloading = false;
+            });
+            $scope.specialties = Specialty.query();
+            $scope.enterprises = Enterprise.query();
+        };
 
         $scope.clearSearch = function() {
             $scope.search = '';
@@ -53,12 +66,9 @@ angular.module('TradeUnion')
             $scope.entry = record;
         };
 
-        $scope.newWorker = function() {
-            // $scope.entry = Worker.defaults();
-            console.log(Worker.create())
-        };
-
-        $scope.deleteWorker = function($id) {
-
+        $scope.deleteWorker = function(record) {
+            Worker.delete({ id: record.id }, function() {
+                delete $scope.workers[$scope.workers.indexOf(record)];
+            });
         };
     });

@@ -14,5 +14,21 @@ class Worker extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'birth_date', 'hire_date'];
+
+    /**
+     * Get the specialty record associated with the worker.
+     */
+    public function specialty()
+    {
+        return $this->hasOne('App\Specialty');
+    }
+
+    /**
+     * Get the enterprise record associated with the worker.
+     */
+    public function enterprise()
+    {
+        return $this->hasOne('App\Enterprise');
+    }
 }
