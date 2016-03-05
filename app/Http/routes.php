@@ -22,7 +22,7 @@ Route::resource('specialty', 'SpecialtyController');
 Route::resource('enterprise', 'EnterpriseController');
 
 Route::get('/', function () {
-    return include 'index.html';
+    include 'index.html';
 });
 
 /*
