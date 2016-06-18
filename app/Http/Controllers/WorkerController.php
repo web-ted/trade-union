@@ -6,7 +6,8 @@ use App\Worker;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class WorkerController extends Controller
 {
@@ -27,25 +28,51 @@ class WorkerController extends Controller
      */
     public function create()
     {
-        return Worker::findOrNew(0);
+        return false;
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $worker = new Worker();
-        return $worker->save($request->all());
+        $workerAttributes = [
+            'active' => $request->get('active'),
+            'registration_number' => $request->get('registration_number'),
+            'registered_at' => $request->get('registered_at'),
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'father_name' => $request->get('father_name'),
+            'birth_date' => $request->get('birth_date'),
+            'id_card' => $request->get('id_card'),
+            'phone' => $request->get('phone'),
+            'mobile_phone' => $request->get('mobile_phone'),
+            'email' => $request->get('email'),
+            'address' => $request->get('address'),
+            'postal_code' => $request->get('postal_code'),
+            'region' => $request->get('region'),
+            'city' => $request->get('city'),
+            'hire_date' => $request->get('hire_date'),
+            'insurance_number' => $request->get('insurance_number'),
+            'comment' => $request->get('comment'),
+            'enterprise_id' => $request->get('enterprise_id'),
+            'specialty_id' => $request->get('specialty_id'),
+        ];
+
+        foreach ($workerAttributes as $attrName => $attrVal) {
+            $worker->$attrName = $attrVal;
+        }
+        return $worker->save();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -56,19 +83,19 @@ class WorkerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        return Worker::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -79,11 +106,17 @@ class WorkerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         return Worker::where('id', $id)->delete();
+    }
+
+    public function nextRegistrationNumber()
+    {
+        $maxRegNumber = DB::table('workers')->max('registration_number');
+        return response()->json(['maxRegistrationNumber' => $maxRegNumber]);
     }
 }
