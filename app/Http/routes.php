@@ -11,9 +11,10 @@
 |
 */
 
-Route::get('/test', function() {
-    return 'test page';
-});
+Route::get('worker/import', 'WorkerController@import');
+Route::get('worker/max', 'WorkerController@nextRegistrationNumber');
+
+Route::get('info', 'TestController@info');
 
 Route::resource('worker', 'WorkerController');
 
