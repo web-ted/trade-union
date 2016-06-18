@@ -12,31 +12,35 @@ class CreateWorkersTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('workers');
+        // Schema::dropIfExists('workers');
         Schema::create('workers', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->boolean('active');
-            $table->string('registration_number');
-            $table->date('registered_at');
+            $table->integer('registration_number')->unique();
+            $table->dateTime('registered_at')->nullable();
+//            $table->timestamp('registered_at')->nullable(); // same result. its type is date instead of timestamp that was expected
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('father_name');
-            $table->date('birth_date');
-            $table->string('id_card');
-            $table->string('phone');
-            $table->string('mobile_phone');
-            $table->string('email');
-            $table->string('address');
-            $table->string('region');
-            $table->string('city');
-            $table->date('hire_date');
-            $table->string('insurance_number');
-            $table->text('comment');
-            $table->integer('enterprise_id');
-            $table->integer('specialty_id');
-            $table->softDeletes();
+            $table->string('father_name')->nullable();
+            $table->dateTime('birth_date')->nullable();
+//            $table->timestamp('birth_date')->nullable(); // same result. its type is date instead of timestamp that was expected
+            $table->string('id_card')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('mobile_phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('region')->nullable();
+            $table->string('city')->nullable();
+            $table->dateTime('hire_date')->nullable();
+//            $table->timestamp('hire_date')->nullable();  // same result. its type is date instead of timestamp that was expected
+            $table->string('insurance_number')->nullable();
+            $table->text('comment')->nullable();
+            $table->integer('enterprise_id')->nullable();
+            $table->integer('specialty_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -47,6 +51,7 @@ class CreateWorkersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('workers');
+        // Schema::drop('workers');
+        Schema::dropIfExists('workers');
     }
 }
