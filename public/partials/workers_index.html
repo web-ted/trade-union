@@ -10,7 +10,7 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-2">
-                    <h5>Workers Index &nbsp;&nbsp;<span ng-click="reloadMembers()" title="Reload Members Index" class="glyphicon glyphicon-refresh" ng-class="{ 'spin':reloading }" role="button"></span></h5>
+                    <h5>Workers Index &nbsp;&nbsp;<span ng-click="loadAll()" title="Reload Members Index" class="glyphicon glyphicon-refresh" ng-class="{ 'spin':reloading }" role="button"></span></h5>
                 </div>
                 <div class="col-md-3 col-md-offset-7">
                     <div class="input-group input-group-sm">
@@ -34,25 +34,25 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th ng-click="order('first_name')" class="btn">
-                        <span class="glyphicon" ng-show="predicate === 'first_name'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                    <th ng-click="order('registration_number')" role="button">
+                        <span class="glyphicon" ng-show="predicate === 'registration_number'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        Registration Number
+                    </th>
+                    <th ng-click="order('last_name')" role="button">
+                        <span class="glyphicon" ng-show="predicate === 'last_name'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         First Name
                     </th>
-                    <th ng-click="order('last_name')">
-                        <span class="glyphicon" ng-show="predicate === 'last_name'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                    <th ng-click="order('father_name')" role="button">
+                        <span class="glyphicon" ng-show="predicate === 'father_name'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Last Name
                     </th>
-                    <th ng-click="order('father_name')">
-                        <span class="glyphicon" ng-show="predicate === 'father_name'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                    <th ng-click="order('phone')" role="button">
+                        <span class="glyphicon" ng-show="predicate === 'phone'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Father's Name
                     </th>
-                    <th ng-click="order('phone')">
-                        <span class="glyphicon" ng-show="predicate === 'phone'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
-                        Phone
-                    </th>
-                    <th ng-click="order('mobile_phone')">
+                    <th ng-click="order('mobile_phone')" role="button">
                         <span class="glyphicon" ng-show="predicate === 'mobile_phone'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
-                        Cell Phone
+                        Phone
                     </th>
                     <th>
                         Actions
@@ -60,11 +60,11 @@
                 </tr>
                 </thead>
                 <tr ng-repeat="worker in workers | orderBy: predicate : reverse | limitTo: itemsPerPage : begin | filter: search">
+                    <td>{{worker.registration_number}}</td>
                     <td>{{worker.first_name}}</td>
                     <td>{{worker.last_name}}</td>
                     <td>{{worker.father_name}}</td>
                     <td>{{worker.phone}}</td>
-                    <td>{{worker.mobile_phone}}</td>
                     <td>
                         <button title="Edit Member" type="button" class="btn btn-primary btn-sm" aria-label="Edit Worker" ng-click="editWorker(worker)" data-toggle="modal" data-target="#editWorker">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
@@ -79,26 +79,27 @@
         <div class="panel-footer">
             <div class="row">
                 <div class="col-md-8">
-                        <button type="button" class="btn btn-primary" ng-click="editWorker()" data-toggle="modal" data-target="#editWorker" aria-label="Add Worker"><span class="glyphicon glyphicon-plus-sign"></span> Add New Worker</button>
-                        <button type="button" class="btn btn-default" ng-click="exportWorkers()" aria-label="Export Workers"><span class="glyphicon glyphicon-save-file"></span> Export List</button>
-                        <button type="button" class="btn btn-default" ng-click="exportWorkers()" aria-label="Export Workers"><span class="glyphicon glyphicon-copy"></span> Import...</button>
-                    <!--Showing {{itemsPerPage}} workers per page-->
+                        <button type="button" class="btn btn-primary" ng-click="addWorker()" data-toggle="modal" data-target="#editWorker" aria-label="Add Worker"><span class="glyphicon glyphicon-plus-sign"></span> Add New Worker</button>
+                        <!--<button type="button" class="btn btn-default" ng-click="exportWorkers()" aria-label="Export Workers"><span class="glyphicon glyphicon-save-file"></span> Export List</button>-->
+                        <!--<button type="button" class="btn btn-default" ng-click="exportWorkers()" aria-label="Export Workers"><span class="glyphicon glyphicon-copy"></span> Import...</button>-->
                 </div>
                 <div class="col-md-4" ng-show="showPagination">
                     <uib-pagination
                             total-items="workers.length"
                             ng-model="currentPage"
-                            max-size="maxSize"
                             class="pagination-sm pull-right"
-                            boundary-links="boundaryLinks"
-                            force-ellipses="forceEclipses"
-                            rotate="rotate"
+                            boundary-links="true"
+                            force-ellipses="false"
+                            rotate="true"
+                            items-per-page="itemsPerPage"
                             num-pages="numPages"
+                            max-size="5"
                             previous-text="&lsaquo;"
                             next-text="&rsaquo;"
                             first-text="&laquo;"
                             last-text="&raquo;"
-                            ng-click="setPage(currentPage)">
+                            ng-click="setPage(currentPage)"
+                            ng-disabled="paginationDisable">
                     </uib-pagination>
                 </div>
             </div>
@@ -112,11 +113,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" ng-show="entry">Update: {{entry.first_name}} {{entry.last_name}}</h4>
+                <h4 class="modal-title" ng-show="action == 'update'">Update: {{entry.first_name}} {{entry.last_name}} (Α.Μ. {{entry.registration_number}})</h4>
+                <h4 class="modal-title" ng-show="action == 'create'">Create New Worker Entry</h4>
                 <h4 class="modal-title" ng-show="!entry">Create a New Member</h4>
             </div>
             <div class="modal-body">
-                <form>
+                <form name="EditWorkerForm">
                 <uib-tabset>
                     <uib-tab heading="Personal">
                             <div class="form-group">
@@ -125,7 +127,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="workerLastName">Last Name</label>
-                                <input ng-model="entry.last_name" type="text" class="form-control" id="workerLastName" placeholder="Enter last name">
+                                <input ng-model="entry.last_name" ng-required="true" type="text" class="form-control" id="workerLastName" placeholder="Enter last name">
+                            </div>
+                            <div class="form-group">
+                                <label for="workerFatherName">Father's Name</label>
+                                <input ng-model="entry.father_name" ng-required="true" type="text" class="form-control" id="workerFatherName" placeholder="Enter father's name">
                             </div>
                             <div class="form-group">
                                 <label for="workerBirthDate">Birth Date</label>
@@ -148,7 +154,7 @@
                         </div>
                         <div class="form-group">
                             <label for="workerRegisteredAt">Registration Date</label>
-                            <input ng-model="entry.registered_at" type="date" class="form-control" id="workerRegisteredAt" placeholder="Enter registration to the union date">
+                            <input ng-model="entry.registered_at" ng-required="true" type="date" class="form-control" id="workerRegisteredAt" placeholder="Enter registration to the union date">
                         </div>
                         <div class="checkbox">
                             <label>
@@ -164,15 +170,15 @@
                     <uib-tab heading="Contact">
                         <div class="form-group">
                             <label for="workerPhone">Phone</label>
-                            <input ng-model="entry.phone" ng-required="true" type="text" class="form-control" id="workerPhone" placeholder="Enter phone">
+                            <input ng-model="entry.phone" type="text" class="form-control" id="workerPhone" placeholder="Enter phone">
                         </div>
                         <div class="form-group">
                             <label for="workerMobilePhone">Mobile Phone</label>
-                            <input ng-model="entry.mobile_phone" ng-required="true" type="text" class="form-control" id="workerMobilePhone" placeholder="Enter cell phone">
+                            <input ng-model="entry.mobile_phone" type="text" class="form-control" id="workerMobilePhone" placeholder="Enter cell phone">
                         </div>
                         <div class="form-group">
                             <label for="workerEmail">E-mail Address</label>
-                            <input ng-model="entry.email" ng-required="true" type="email" class="form-control" id="workerEmail" placeholder="Enter e-mail address">
+                            <input ng-model="entry.email" type="email" class="form-control" id="workerEmail" placeholder="Enter e-mail address">
                         </div>
                     </uib-tab>
                     <uib-tab heading="Residence">
@@ -182,7 +188,7 @@
                         </div>
                         <div class="form-group">
                             <label for="workerRegion">Region</label>
-                            <input ng-model="entry.region" ng-required="true" type="text" class="form-control" id="workerRegion" placeholder="Enter region">
+                            <input ng-model="entry.region" type="text" class="form-control" id="workerRegion" placeholder="Enter region">
                         </div>
                         <div class="form-group">
                             <label for="workerAddress">Address</label>
@@ -191,18 +197,12 @@
                     </uib-tab>
                     <uib-tab heading="Work Position">
                         <div class="form-group">
-                            <label for="workerEnterprise">Specialty</label>
-                            <select id="workerEnterprise" ng-model="entry.enterprise_id" class="form-control">
-                                <option value=""></option>
-                                <option ng-repeat="enterprise in enterprises" value="{{enterprise.id}}">{{enterprise  .name}}</option>
-                            </select>
+                            <label for="workerEnterprise">Company</label>
+                            <select id="workerEnterprise" ng-model="entry.enterprise_id" ng-required="true" ng-options="enterprise.id as enterprise.name for enterprise in enterprises | orderBy: 'name'" class="form-control"></select>
                         </div>
                         <div class="form-group">
                             <label for="workerSpecialty">Specialty</label>
-                            <select id="workerSpecialty" ng-model="entry.specialty_id" class="form-control">
-                                <option value=""></option>
-                                <option ng-repeat="specialty in specialties" value="{{specialty.id}}">{{specialty.name}}</option>
-                            </select>
+                            <select id="workerSpecialty" ng-model="entry.specialty_id" ng-options="specialty.id as specialty.name for specialty in specialties | orderBy: 'name'" class="form-control"></select>
                         </div>
                         <div class="form-group">
                             <label for="workerHireDate">Hire Date</label>
@@ -214,7 +214,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updateWorker(entry)">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="action == 'update'" ng-click="updateWorker(entry)" ng-disabled="!EditWorkerForm.$valid">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="action == 'create'" ng-click="createWorker(entry)" ng-disabled="!EditWorkerForm.$valid">Save changes</button>
             </div>
         </div>
     </div>
