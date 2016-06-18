@@ -14,7 +14,13 @@ class Worker extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at', 'birth_date', 'hire_date', 'registered_at', 'birth_date'];
+    protected $casts = [
+        'active' => 'boolean',
+        'birth_date' => 'timestamp',
+        'hire_date' => 'timestamp',
+        'registered_at' => 'timestamp',
+    ];
+
 
     /**
      * Get the specialty record associated with the worker.
