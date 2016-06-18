@@ -9,6 +9,10 @@ angular.module('TradeUnion')
                url: '/worker/create',
                method: 'GET',
                isArray: true
+           },
+           max: {
+               url: '/worker/max',
+               method: 'GET'
            }
        });
     })
