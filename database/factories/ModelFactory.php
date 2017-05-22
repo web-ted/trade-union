@@ -39,8 +39,8 @@ $factory->define(App\Worker::class, function (Faker\Generator $faker) {
         'hire_date'           => $faker->date('Y-m-d', "10 years ago"),
         'insurance_number'    => $faker->uuid,
         'comment'             => $faker->realText(20),
-        'enterprise_id'       => 1,
-        'specialty_id'        => 1,
+        'enterprise_id'       => $faker->numberBetween(1,10),
+        'specialty_id'        => $faker->numberBetween(1,4),
     ];
 });
 
