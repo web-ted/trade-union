@@ -13,59 +13,56 @@
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
-        'password' => bcrypt(str_random(10)),
+        'name'           => $faker->name,
+        'email'          => $faker->email,
+        'password'       => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
     ];
 });
 
 $factory->define(App\Worker::class, function (Faker\Generator $faker) {
     return [
-        'active' => true,
-        'registration_number' => $faker->numberBetween(1, 400),
-        'registered_at' => $faker->date(),
-        'first_name' => $faker->firstName,
-        'last_name' => $faker->lastName,
-        'father_name' => $faker->firstName,
-        'birth_date' => $faker->date('Y-m-d'),
-        'id_card' => $faker->creditCardNumber,
-        'phone' => $faker->phoneNumber,
-        'mobile_phone' => $faker->phoneNumber,
-        'email' => $faker->email,
-        'address' => $faker->address,
-        'region' => $faker->city,
-        'city' => $faker->city,
-        'hire_date' => $faker->date('Y-m-d'),
-        'insurance_number' => $faker->creditCardNumber,
-        'comment' => $faker->text(20),
-        'enterprise_id' => $faker->numberBetween(1, 5),
-        'enterprise_id' => $faker->numberBetween(1, 5),
-        'specialty_id' => $faker->numberBetween(1, 5),
-//        'created_at' => date("Y-m-d H:i:s"),
-        'created_at' => time(),
-//        'updated_at' => date("Y-m-d H:i:s"),
-        'updated_at' => time()
+        'active'              => 1,
+        'registration_number' => $faker->unique()->randomNumber(3),
+        'registered_at'       => $faker->date('Y-m-d', "3 days ago"),
+        'first_name'          => $faker->firstName,
+        'last_name'           => $faker->lastName,
+        'father_name'         => $faker->firstName,
+        'birth_date'          => $faker->date('Y-m-d', "3 year ago"),
+        'id_card'             => $faker->creditCardNumber,
+        'phone'               => $faker->phoneNumber,
+        'mobile_phone'        => $faker->phoneNumber,
+        'email'               => $faker->email,
+        'address'             => $faker->streetAddress,
+        'region'              => $faker->citySuffix,
+        'city'                => $faker->city,
+        'hire_date'           => $faker->date('Y-m-d', "10 years ago"),
+        'insurance_number'    => $faker->uuid,
+        'comment'             => $faker->realText(20),
+        'enterprise_id'       => $faker->numberBetween(1,10),
+        'specialty_id'        => $faker->numberBetween(1,4),
     ];
 });
 
-$factory->define(App\Enterprise::class, function(Faker\Generator $faker) {
+$factory->define(App\Enterprise::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->company,
-        'address' => $faker->streetAddress,
-        'region' => $faker->city,
-        'city' => $faker->city,
-        'phone' => $faker->phoneNumber,
-        'fax' => $faker->phoneNumber,
-        'email' => $faker->email,
-        'founded' => $faker->year,
-        'workers_number' => $faker->numberBetween(10, 250),
-        'business_activity' => $faker->companySuffix,
+        'name'              => $faker->company,
+        'address'           => $faker->streetAddress,
+        'region'            => $faker->address,
+        'phone'             => $faker->phoneNumber,
+        'fax'               => $faker->phoneNumber,
+        'email'             => $faker->companyEmail,
+        'city'              => $faker->city,
+        'founded'           => $faker->date('Y-m-d', "5 years ago"),
+        'workers_number'    => $faker->randomNumber(2),
+        'owners'            => $faker->firstName . ' ' . $faker->lastName,
+        'business_activity' => 'Software House',
     ];
 });
 
-//$factory->define(App\Specialty::class, function(Faker\Generator) {
-//    return [
-//
-//    ];
-//});
+$factory->define(App\Specialty::class, function (Faker\Generator $faker) {
+    return [
+        'name'        => $faker->colorName,
+        'description' => $faker->realText(30)
+    ];
+});

@@ -10,19 +10,23 @@ angular.module('TradeUnion')
         $scope.forceEclipses = true;
         $scope.boundaryLinks = true;
         $scope.showPagination = true;
-        // $scope.predicate = 'last_name';
-        // $scope.reverse = false;
 
-        $scope.loadWorkers = function () {
-            var workers = [],
-                dates = [
-                    'birth_date',
-                    'hire_date',
-                    'registered_at'
-                ];
+        //$scope.predicate = 'last_name';
+        //$scope.reverse = false;
+        $scope.datePickerOptions = {
+            dateDisabled: false,
+            formatDay: 'dd',
+            formatMonth: 'MM',
+            formatYear: 'yyyy'
+        };
 
-            Worker.query({}, function (response) {
-                $scope.workers = angular.copy(response);;
+        $scope.reloadMembers = function() {
+            $scope.reloading = true;
+            $scope.workers =  Worker.query({}, function(response) {
+                console.log(angular.copy(response));
+                // angular.forEach($scope.workers, function (value) {  }, );
+                $scope.reloading = false;
+            }, function() {
                 $scope.reloading = false;
             });
         };

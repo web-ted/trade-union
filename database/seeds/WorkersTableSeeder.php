@@ -12,7 +12,7 @@ class WorkersTableSeeder extends Seeder
      */
     public function run()
     {
-        // factory(App\Worker::class, 50)->create();
-        Artisan::call("worker:import");
+        // Artisan::call("worker:import");
+        factory(App\Worker::class, 200)->create();
     }
 }

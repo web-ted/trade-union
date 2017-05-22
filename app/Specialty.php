@@ -3,8 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Specialty extends Model
 {
-    protected $fillable = [ 'name' ];
+    use SoftDeletes;
 }
