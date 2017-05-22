@@ -22,19 +22,7 @@ angular.module('TradeUnion')
                 ];
 
             Worker.query({}, function (response) {
-                var data = angular.copy(response);
-
-                angular.forEach(data, function (worker) {
-                    dates.forEach(function (fieldName) {
-                        if (worker[fieldName]) {
-                            worker[fieldName] = new Date(worker[fieldName] * 1000);
-                        }
-                    });
-
-                    this.push(worker);
-                }, workers);
-
-                $scope.workers = workers;
+                $scope.workers = angular.copy(response);;
                 $scope.reloading = false;
             });
         };
@@ -92,11 +80,18 @@ angular.module('TradeUnion')
         };
 
         $scope.createWorker = function (record) {
-            Worker.save({id: record.id}, record);
+            Worker.save({id: record.id}, record).then(function (response) {
+                var data = response.data;
+
+                console.log(data);
+            }, function (response) {
+                console.log(response);
+            });
         };
 
         $scope.editWorker = function (record) {
-            var entry = angular.copy($scope.workers[$scope.workers.indexOf(record)]);
+            // var entry = angular.copy($scope.workers[$scope.workers.indexOf(record)]);
+            var entry = $scope.workers[$scope.workers.indexOf(record)];
 
             $scope.action = 'update';
             $scope.originalEntry = entry;
@@ -115,9 +110,17 @@ angular.module('TradeUnion')
         };
 
         $scope.deleteWorker = function (record) {
-            Worker.delete({id: record.id}, function () {
-                delete $scope.workers[$scope.workers.indexOf(record)];
+            Worker.delete({id: record.id}, function (response) {
+                var data = response.data;
+
+                if(data == 1) {
+                    $scope.workers.splice($scope.workers.indexOf(record), 1);
+                } // TODO: You need to add notification on failure
             });
+        };
+
+        $scope.openDatePicker = function() {
+            $scope.popupOpened = true;
         };
 
         $scope.loadAll();
