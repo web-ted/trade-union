@@ -43,3 +43,19 @@ $factory->define(App\Worker::class, function (Faker\Generator $faker) {
         'specialty_id'        => 1,
     ];
 });
+
+$factory->define(App\Enterprise::class, function (Faker\Generator $faker) {
+    return [
+        'name'              => $faker->company,
+        'address'           => $faker->streetAddress,
+        'region'            => $faker->address,
+        'phone'             => $faker->phoneNumber,
+        'fax'               => $faker->phoneNumber,
+        'email'             => $faker->companyEmail,
+        'city'              => $faker->city,
+        'founded'           => $faker->date('Y-m-d', "5 years ago"),
+        'workers_number'    => $faker->randomNumber(2),
+        'owners'            => $faker->firstName . ' ' . $faker->lastName,
+        'business_activity' => 'Software House',
+    ];
+});
