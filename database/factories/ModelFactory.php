@@ -59,3 +59,10 @@ $factory->define(App\Enterprise::class, function (Faker\Generator $faker) {
         'business_activity' => 'Software House',
     ];
 });
+
+$factory->define(App\Specialty::class, function (Faker\Generator $faker) {
+    return [
+        'name'        => $faker->colorName,
+        'description' => $faker->realText(30)
+    ];
+});
