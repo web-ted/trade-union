@@ -10,7 +10,9 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-2">
-                    <h5>Workers Index &nbsp;&nbsp;<span ng-click="reloadMembers()" title="Reload Members Index" class="glyphicon glyphicon-refresh" ng-class="{ 'spin':reloading }" role="button"></span></h5>
+                    <h5>Workers Index &nbsp;&nbsp;<span ng-click="reloadMembers()" title="Reload Members Index"
+                                                        class="glyphicon glyphicon-refresh"
+                                                        ng-class="{ 'spin':reloading }" role="button"></span></h5>
                 </div>
                 <div class="col-md-3 col-md-offset-7">
                     <div class="input-group input-group-sm">
@@ -21,7 +23,8 @@
                         </span>
                         <input type="text" class="form-control" ng-change="searching()" ng-model="search">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" title="Clear Search Box" type="button" ng-click="clearSearch()">
+                            <button class="btn btn-default" title="Clear Search Box" type="button"
+                                    ng-click="clearSearch()">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </span>
@@ -35,23 +38,28 @@
                 <thead>
                 <tr>
                     <th ng-click="order('first_name')" class="btn">
-                        <span class="glyphicon" ng-show="predicate === 'first_name'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        <span class="glyphicon" ng-show="predicate === 'first_name'"
+                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         First Name
                     </th>
                     <th ng-click="order('last_name')">
-                        <span class="glyphicon" ng-show="predicate === 'last_name'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        <span class="glyphicon" ng-show="predicate === 'last_name'"
+                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Last Name
                     </th>
                     <th ng-click="order('father_name')">
-                        <span class="glyphicon" ng-show="predicate === 'father_name'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        <span class="glyphicon" ng-show="predicate === 'father_name'"
+                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Father's Name
                     </th>
                     <th ng-click="order('phone')">
-                        <span class="glyphicon" ng-show="predicate === 'phone'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        <span class="glyphicon" ng-show="predicate === 'phone'"
+                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Phone
                     </th>
                     <th ng-click="order('mobile_phone')">
-                        <span class="glyphicon" ng-show="predicate === 'mobile_phone'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        <span class="glyphicon" ng-show="predicate === 'mobile_phone'"
+                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Cell Phone
                     </th>
                     <th>
@@ -66,10 +74,14 @@
                     <td>{{worker.phone}}</td>
                     <td>{{worker.mobile_phone}}</td>
                     <td>
-                        <button title="Edit Member" type="button" class="btn btn-primary btn-sm" aria-label="Edit Worker" ng-click="editWorker(worker)" data-toggle="modal" data-target="#editWorker">
+                        <button title="Edit Member" type="button" class="btn btn-primary btn-sm"
+                                aria-label="Edit Worker" ng-click="editWorker(worker)" data-toggle="modal"
+                                data-target="#editWorker">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         </button>
-                        <button title="Delete Member" ng-click="editWorker(worker)" type="button" class="btn btn-danger btn-sm" aria-label="Delete Worker" data-toggle="modal" data-target="#confirmWorkerDeletion">
+                        <button title="Delete Member" ng-click="editWorker(worker)" type="button"
+                                class="btn btn-danger btn-sm" aria-label="Delete Worker" data-toggle="modal"
+                                data-target="#confirmWorkerDeletion">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </button>
                     </td>
@@ -79,9 +91,16 @@
         <div class="panel-footer">
             <div class="row">
                 <div class="col-md-8">
-                        <button type="button" class="btn btn-primary" ng-click="editWorker()" data-toggle="modal" data-target="#editWorker" aria-label="Add Worker"><span class="glyphicon glyphicon-plus-sign"></span> Add New Worker</button>
-                        <button type="button" class="btn btn-default" ng-click="exportWorkers()" aria-label="Export Workers"><span class="glyphicon glyphicon-save-file"></span> Export List</button>
-                        <button type="button" class="btn btn-default" ng-click="exportWorkers()" aria-label="Export Workers"><span class="glyphicon glyphicon-copy"></span> Import...</button>
+                    <button type="button" class="btn btn-primary" ng-click="editWorker()" data-toggle="modal"
+                            data-target="#editWorker" aria-label="Add Worker"><span
+                            class="glyphicon glyphicon-plus-sign"></span> Add New Worker
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="exportWorkers()"
+                            aria-label="Export Workers"><span class="glyphicon glyphicon-save-file"></span> Export List
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="exportWorkers()"
+                            aria-label="Export Workers"><span class="glyphicon glyphicon-copy"></span> Import...
+                    </button>
                     <!--Showing {{itemsPerPage}} workers per page-->
                 </div>
                 <div class="col-md-4" ng-show="showPagination">
@@ -111,110 +130,164 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" ng-show="entry">Update: {{entry.first_name}} {{entry.last_name}}</h4>
                 <h4 class="modal-title" ng-show="!entry">Create a New Member</h4>
             </div>
             <div class="modal-body">
                 <form>
-                <uib-tabset>
-                    <uib-tab heading="Personal">
+                    <uib-tabset>
+                        <uib-tab heading="Personal">
                             <div class="form-group">
                                 <label for="workerFirstName">First Name</label>
-                                <input ng-model="entry.first_name" ng-required="true" type="text" class="form-control" id="workerFirstName" placeholder="Enter first name">
+                                <input ng-model="entry.first_name" ng-required="true" type="text" class="form-control"
+                                       id="workerFirstName" placeholder="Enter first name">
                             </div>
                             <div class="form-group">
                                 <label for="workerLastName">Last Name</label>
-                                <input ng-model="entry.last_name" type="text" class="form-control" id="workerLastName" placeholder="Enter last name">
+                                <input ng-model="entry.last_name" type="text" class="form-control" id="workerLastName"
+                                       placeholder="Enter last name">
                             </div>
                             <div class="form-group">
                                 <label for="workerBirthDate">Birth Date</label>
-                                <input ng-model="entry.birth_date" type="date" class="form-control" id="workerBirthDate" placeholder="Enter birth date in dd/mm/yyyy format">
+                                <div class="input-group">
+                                    <input ng-model="entry.birth_date" type="text"
+                                           uib-datepicker-options="datePickerOptions" readonly
+                                           uib-datepicker-popup="yyyy-MM-dd" is-open="birthDateOpened"
+                                           class="form-control" id="workerBirthDate"
+                                           placeholder="Pick birth date with the picker">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="birthDateOpened=1">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="workerIdNumber">ID Number</label>
-                                <input ng-model="entry.id_card" type="text" class="form-control" id="workerIdNumber" placeholder="Enter you ID card number">
+                                <input ng-model="entry.id_card" type="text" class="form-control" id="workerIdNumber"
+                                       placeholder="Enter you ID card number">
                             </div>
                             <div class="form-group">
                                 <label for="workerInsuranceNumber">Insurance Number</label>
-                                <input ng-model="entry.insurance_number" type="text" class="form-control" id="workerInsuranceNumber" placeholder="Enter you insurance number">
+                                <input ng-model="entry.insurance_number" type="text" class="form-control"
+                                       id="workerInsuranceNumber" placeholder="Enter you insurance number">
                             </div>
-                    </uib-tab>
-                    <uib-tab heading="Union">
-                        <div class="form-group">
-                            <label for="workerRegistrationNumber">Registration Number</label>
-                            <input ng-model="entry.registration_number" ng-required="true" type="text" class="form-control" id="workerRegistrationNumber" placeholder="Enter first name">
-                            <small class="text-muted">Registration number must be unique for all members</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="workerRegisteredAt">Registration Date</label>
-                            <input ng-model="entry.registered_at" type="date" class="form-control" id="workerRegisteredAt" placeholder="Enter registration to the union date">
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input ng-model="entry.active" type="checkbox" id="workerActive"> Active
-                            </label><br>
-                            <small class="text-muted">Inactive members are those that were removed</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="workerComments">Comment</label>
-                            <textarea ng-model="entry.comment" type="date" class="form-control" id="workerComments"></textarea>
-                        </div>
-                    </uib-tab>
-                    <uib-tab heading="Contact">
-                        <div class="form-group">
-                            <label for="workerPhone">Phone</label>
-                            <input ng-model="entry.phone" ng-required="true" type="text" class="form-control" id="workerPhone" placeholder="Enter phone">
-                        </div>
-                        <div class="form-group">
-                            <label for="workerMobilePhone">Mobile Phone</label>
-                            <input ng-model="entry.mobile_phone" ng-required="true" type="text" class="form-control" id="workerMobilePhone" placeholder="Enter cell phone">
-                        </div>
-                        <div class="form-group">
-                            <label for="workerEmail">E-mail Address</label>
-                            <input ng-model="entry.email" ng-required="true" type="email" class="form-control" id="workerEmail" placeholder="Enter e-mail address">
-                        </div>
-                    </uib-tab>
-                    <uib-tab heading="Residence">
-                        <div class="form-group">
-                            <label for="workerCity">City</label>
-                            <input ng-model="entry.city" ng-required="true" type="text" class="form-control" id="workerCity" placeholder="Enter city">
-                        </div>
-                        <div class="form-group">
-                            <label for="workerRegion">Region</label>
-                            <input ng-model="entry.region" ng-required="true" type="text" class="form-control" id="workerRegion" placeholder="Enter region">
-                        </div>
-                        <div class="form-group">
-                            <label for="workerAddress">Address</label>
-                            <input ng-model="entry.address" ng-required="true" type="text" class="form-control" id="workerAddress" placeholder="Enter home address">
-                        </div>
-                    </uib-tab>
-                    <uib-tab heading="Work Position">
-                        <div class="form-group">
-                            <label for="workerEnterprise">Specialty</label>
-                            <select id="workerEnterprise" ng-model="entry.enterprise_id" class="form-control">
-                                <option value=""></option>
-                                <option ng-repeat="enterprise in enterprises" value="{{enterprise.id}}">{{enterprise  .name}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="workerSpecialty">Specialty</label>
-                            <select id="workerSpecialty" ng-model="entry.specialty_id" class="form-control">
-                                <option value=""></option>
-                                <option ng-repeat="specialty in specialties" value="{{specialty.id}}">{{specialty.name}}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="workerHireDate">Hire Date</label>
-                            <input ng-model="entry.hire_date" type="date" class="form-control" id="workerHireDate" placeholder="Enter hire date in dd/mm/yyyy format">
-                        </div>
-                    </uib-tab>
-                </uib-tabset>
+                        </uib-tab>
+                        <uib-tab heading="Union">
+                            <div class="form-group">
+                                <label for="workerRegistrationNumber">Registration Number</label>
+                                <input ng-model="entry.registration_number" ng-required="true" type="text"
+                                       class="form-control" id="workerRegistrationNumber"
+                                       placeholder="Enter first name">
+                                <small class="text-muted">Registration number must be unique for all members</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="workerRegisteredAt">Registration Date</label>
+                                <div class="input-group">
+                                    <input ng-model="entry.registered_at" type="text"
+                                           uib-datepicker-options="datePickerOptions" readonly
+                                           uib-datepicker-popup="yyyy-MM-dd" is-open="registrationDateOpened"
+                                           class="form-control" id="workerRegisteredAt"
+                                           placeholder="Pick registration date with the picker">
+                                    <!--<input ng-model="entry.registered_at" type="text" readonly uib-datepicker-popup="yyyy-MM-dd" is-open="registrationDateOpened" class="form-control" id="workerRegisteredAt" placeholder="Pick registration date with the picker">-->
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"
+                                                ng-click="registrationDateOpened=1">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input ng-model="entry.active" type="checkbox" id="workerActive"> Active
+                                </label><br>
+                                <small class="text-muted">Inactive members are those that were removed</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="workerComments">Comment</label>
+                                <textarea ng-model="entry.comment" class="form-control" id="workerComments"></textarea>
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="Contact">
+                            <div class="form-group">
+                                <label for="workerPhone">Phone</label>
+                                <input ng-model="entry.phone" ng-required="true" type="text" class="form-control"
+                                       id="workerPhone" placeholder="Enter phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="workerMobilePhone">Mobile Phone</label>
+                                <input ng-model="entry.mobile_phone" ng-required="true" type="text" class="form-control"
+                                       id="workerMobilePhone" placeholder="Enter cell phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="workerEmail">E-mail Address</label>
+                                <input ng-model="entry.email" ng-required="true" type="email" class="form-control"
+                                       id="workerEmail" placeholder="Enter e-mail address">
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="Residence">
+                            <div class="form-group">
+                                <label for="workerCity">City</label>
+                                <input ng-model="entry.city" ng-required="true" type="text" class="form-control"
+                                       id="workerCity" placeholder="Enter city">
+                            </div>
+                            <div class="form-group">
+                                <label for="workerRegion">Region</label>
+                                <input ng-model="entry.region" ng-required="true" type="text" class="form-control"
+                                       id="workerRegion" placeholder="Enter region">
+                            </div>
+                            <div class="form-group">
+                                <label for="workerAddress">Address</label>
+                                <input ng-model="entry.address" ng-required="true" type="text" class="form-control"
+                                       id="workerAddress" placeholder="Enter home address">
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="Work Position">
+                            <div class="form-group">
+                                <label for="workerEnterprise">Specialty</label>
+                                <select id="workerEnterprise" ng-model="entry.enterprise_id" class="form-control">
+                                    <option value=""></option>
+                                    <option ng-repeat="enterprise in enterprises" value="{{enterprise.id}}">{{enterprise
+                                        .name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="workerSpecialty">Specialty</label>
+                                <select id="workerSpecialty" ng-model="entry.specialty_id" class="form-control">
+                                    <option value=""></option>
+                                    <option ng-repeat="specialty in specialties" value="{{specialty.id}}">
+                                        {{specialty.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="workerHireDate">Hire Date</label>
+                                <div class="input-group">
+                                    <input ng-model="entry.hire_date" type="text"
+                                           uib-datepicker-options="datePickerOptions" readonly
+                                           uib-datepicker-popup="yyyy-MM-dd" is-open="hireDateOpened"
+                                           class="form-control" id="workerHireDate"
+                                           placeholder="Pick hire date with the picker">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="hireDateOpened=1">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updateWorker(entry)">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updateWorker(entry)">Save
+                    changes
+                </button>
             </div>
         </div>
     </div>
@@ -225,7 +298,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" id="confirmLabel">Confirm Deletion</h4>
             </div>
             <div class="modal-body">
@@ -233,7 +307,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteWorker(entry)">Delete</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteWorker(entry)">
+                    Delete
+                </button>
             </div>
         </div>
     </div>
