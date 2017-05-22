@@ -22,6 +22,28 @@ class Worker extends Model
     ];
 
 
+    protected $fillable = [
+        'registration_number',
+        'active',
+        'first_name',
+        'last_name',
+        'father_name',
+        'birth_date',
+        'id_card',
+        'phone',
+        'mobile_phone',
+        'email',
+        'address',
+        'postal_code',
+        'region',
+        'city',
+        'hire_date',
+        'insurance_number',
+        'comment',
+        'enterprise_id',
+        'specialty_id',
+    ];
+
     /**
      * Get the specialty record associated with the worker.
      */
