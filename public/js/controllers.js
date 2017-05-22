@@ -16,10 +16,18 @@ angular.module('TradeUnion')
         $scope.showPagination = true;
         //$scope.predicate = 'last_name';
         //$scope.reverse = false;
+        $scope.datePickerOptions = {
+            dateDisabled: false,
+            formatDay: 'dd',
+            formatMonth: 'MM',
+            formatYear: 'yyyy'
+        };
 
         $scope.reloadMembers = function() {
             $scope.reloading = true;
-            $scope.workers =  Worker.query({}, function() {
+            $scope.workers =  Worker.query({}, function(response) {
+                console.log(angular.copy(response));
+                // angular.forEach($scope.workers, function (value) {  }, );
                 $scope.reloading = false;
             }, function() {
                 $scope.reloading = false;
