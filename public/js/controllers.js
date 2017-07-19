@@ -43,7 +43,7 @@ angular.module('TradeUnion')
 
         $scope.loadAll = function () {
             $scope.reloading = true;
-            $scope.loadWorkers();
+            $scope.reloadMembers();
             $scope.loadOther();
         };
 
