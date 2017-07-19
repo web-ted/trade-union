@@ -4,7 +4,7 @@ This is the TradeUnion project. An app to manage trade union and club members.
 ## Installation Process
 ### Clone Project and Install third-party packages
 First clone the project's code-base locally.
-```bash
+```sh
 $ git clone https://github.com/web-ted/trade-union.git
 ```
 
