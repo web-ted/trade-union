@@ -4,7 +4,7 @@ This is the TradeUnion project. An app to manage trade union and club members.
 ## Installation Process
 ### Clone Project and Install third-party packages
 First clone the project's code-base locally.
-```bash
+```sh
 $ git clone https://github.com/web-ted/trade-union.git
 ```
 
@@ -12,22 +12,16 @@ Then install the third-party dependencies including Laravel using composer depen
 You need composer installed for this to work.
 Learn how to install and use composer from [here.](https://getcomposer.org/)
 
-```bash
+```sh
 $ cd trade-union
 $ composer install
 ```
 
-### Initialize the Database and Migrate Initial Data
-#### Create the Database Schema
-The database schema must be created manually and a user that will be able to manage this schema.
-For e.g. in case the database server is MySQL you can create a schema like this:
-```mysql
-CREATE SCHEMA `trade-union`;
-```
+## Official Documentation
 
 or 
 
-```
+```mysql
 CREATE SCHEMA `schema-name-you-like`;
 ```
 
@@ -39,8 +33,8 @@ I will use **trade-union** in this example, so replace this with your own.
 You need to configure the project to connect to you database schema. Copy .env.example into .env file in the root
 folder/dir of the project:
 
-```bash
-cp .env.example .env
+```sh
+$ cp .env.example .env
 ```
 and then edit the .env file with your favorite text editor or IDE.
 The conf file is quite self explanatory, so change the mysql user credentials with your own.
@@ -57,8 +51,8 @@ DB_PASSWORD=root
 After configuring your project's connection to the database run the migrations to create the needed tables.
 You need to be inside the project's root dir.
 
-````bash
-php artisan migrate
+````sh
+$ php artisan migrate
 ````
 
 Migration will create the following tables for **trade-union** schema:
@@ -77,8 +71,8 @@ To run the app you need to deploy it to a php capable web server like apache or 
 The public folder needs to be exposed as a document root. You may find instruction in the Laravel Framework [site.](https://laravel.com/docs/5.4/installation#pretty-urls)
 
 In case you need to run the app locally and only for development you can achieve this using:
-```bash
-php artisan serve
+```sh
+$ php artisan serve
 ```
 
 This by default will run the app exposing it in <http://localhost:8000>.
