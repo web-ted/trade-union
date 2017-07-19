@@ -10,13 +10,7 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-2">
-<<<<<<< HEAD
                     <h5>Workers Index &nbsp;&nbsp;<span ng-click="loadAll()" title="Reload Members Index" class="glyphicon glyphicon-refresh" ng-class="{ 'spin':reloading }" role="button"></span></h5>
-=======
-                    <h5>Workers Index &nbsp;&nbsp;<span ng-click="reloadMembers()" title="Reload Members Index"
-                                                        class="glyphicon glyphicon-refresh"
-                                                        ng-class="{ 'spin':reloading }" role="button"></span></h5>
->>>>>>> 3ccc6e9a076e71665a464383c2eb197793cf4522
                 </div>
                 <div class="col-md-3 col-md-offset-7">
                     <div class="input-group input-group-sm">
@@ -41,27 +35,10 @@
             <table class="table">
                 <thead>
                 <tr>
-<<<<<<< HEAD
                     <th ng-click="order('registration_number')" role="button">
                         <span class="glyphicon" ng-show="predicate === 'registration_number'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Registration Number
                     </th>
-                    <th ng-click="order('last_name')" role="button">
-                        <span class="glyphicon" ng-show="predicate === 'last_name'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
-                        First Name
-                    </th>
-                    <th ng-click="order('father_name')" role="button">
-                        <span class="glyphicon" ng-show="predicate === 'father_name'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
-                        Last Name
-                    </th>
-                    <th ng-click="order('phone')" role="button">
-                        <span class="glyphicon" ng-show="predicate === 'phone'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
-                        Father's Name
-                    </th>
-                    <th ng-click="order('mobile_phone')" role="button">
-                        <span class="glyphicon" ng-show="predicate === 'mobile_phone'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
-                        Phone
-=======
                     <th ng-click="order('first_name')" class="btn">
                         <span class="glyphicon" ng-show="predicate === 'first_name'"
                               ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
@@ -86,7 +63,6 @@
                         <span class="glyphicon" ng-show="predicate === 'mobile_phone'"
                               ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Cell Phone
->>>>>>> 3ccc6e9a076e71665a464383c2eb197793cf4522
                     </th>
                     <th>
                         Actions
@@ -99,6 +75,7 @@
                     <td>{{worker.last_name}}</td>
                     <td>{{worker.father_name}}</td>
                     <td>{{worker.phone}}</td>
+                    <td>{{worker.mobile_phone}}</td>
                     <td>
                         <button title="Edit Member" type="button" class="btn btn-primary btn-sm"
                                 aria-label="Edit Worker" ng-click="editWorker(worker)" data-toggle="modal"
@@ -281,8 +258,7 @@
                                 <label for="workerEnterprise">Specialty</label>
                                 <select id="workerEnterprise" ng-model="entry.enterprise_id" class="form-control">
                                     <option value=""></option>
-                                    <option ng-repeat="enterprise in enterprises" value="{{enterprise.id}}">{{enterprise
-                                        .name}}
+                                    <option ng-repeat="enterprise in enterprises" value="{{enterprise.id}}">{{enterprise.name}}
                                     </option>
                                 </select>
                             </div>
