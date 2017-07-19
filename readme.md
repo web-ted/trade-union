@@ -1,27 +1,78 @@
-## Laravel PHP Framework
+# Trade Union
+This is the TradeUnion project. An app to manage trade union and club members.
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+## Installation Process
+### Clone Project and Install third-party packages
+First clone the project's code-base locally.
+```bash
+$ git clone https://github.com/web-ted/trade-union.git
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+Then install the third-party dependencies including Laravel using composer dependency manager.
+You need composer installed for this to work.
+Learn how to install and use composer from [here.](https://getcomposer.org/)
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+```sh
+$ cd trade-union
+$ composer install
+```
 
 ## Official Documentation
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+or 
 
-## Contributing
+```mysql
+CREATE SCHEMA `schema-name-you-like`;
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+Open a MySQL client connect to the database server and issue the above command replacing the name of the schema you like.
+I will use **trade-union** in this example, so replace this with your own.
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+#### Configure the Database Connection
+You need to configure the project to connect to you database schema. Copy .env.example into .env file in the root
+folder/dir of the project:
 
-### License
+```sh
+$ cp .env.example .env
+```
+and then edit the .env file with your favorite text editor or IDE.
+The conf file is quite self explanatory, so change the mysql user credentials with your own.
+ 
+```ini
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=trade-union
+DB_USERNAME=root
+DB_PASSWORD=root
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+After configuring your project's connection to the database run the migrations to create the needed tables.
+You need to be inside the project's root dir.
+
+````sh
+$ php artisan migrate
+````
+
+Migration will create the following tables for **trade-union** schema:
+
+* enterprises
+* migrations
+* password_resets
+* specialties
+* users
+* workers
+
+If the mysql user cannot connect then the migrations will probably fail. So you need to fix the .env
+
+## Deploy and run 
+To run the app you need to deploy it to a php capable web server like apache or nginx.
+The public folder needs to be exposed as a document root. You may find instruction in the Laravel Framework [site.](https://laravel.com/docs/5.4/installation#pretty-urls)
+
+In case you need to run the app locally and only for development you can achieve this using:
+```sh
+$ php artisan serve
+```
+
+This by default will run the app exposing it in <http://localhost:8000>.
