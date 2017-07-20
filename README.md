@@ -18,19 +18,27 @@ $ composer install
 ```
 
 ## Official Documentation
+The database schema must be created manually and a user that will be able to manage this schema.
+For e.g. in case the database server is MySQL you can create a schema like this:
 
+```mysql
+CREATE SCHEMA `trade-union`;
+```
 or 
-
 ```mysql
 CREATE SCHEMA `schema-name-you-like`;
 ```
 
 Open a MySQL client connect to the database server and issue the above command replacing the name of the schema you like.
 I will use **trade-union** in this example, so replace this with your own.
-
+If you don't have an IDE capable to connect to the database (like MySQL Workbench) you can use the cli client.
+For e.g. issue this providing the password:
+```sh
+$ mysql -u root -h 127.0.0.1 -p
+```
 
 #### Configure the Database Connection
-You need to configure the project to connect to you database schema. Copy .env.example into .env file in the root
+You need to configure the app to connect to your database schema. Copy .env.example into .env file in the root
 folder/dir of the project:
 
 ```sh
