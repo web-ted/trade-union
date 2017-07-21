@@ -80,6 +80,12 @@ In case you need to see a demo of the app you can seed random data using:
 $ php artisan db:seed
 ```
 
+### Reset Data and Seed again
+In case you need to reset the data and seed them again with random data you need to refresh migrations and seed:
+```sh
+$ php artisan migrate:refresh --seed
+```
+
 ### Deploy and run 
 To run the app you need to deploy it to a php capable web server like apache or nginx.
 The public folder needs to be exposed as a document root. You may find instruction in the Laravel Framework [site.](https://laravel.com/docs/5.4/installation#pretty-urls)
