@@ -14,14 +14,15 @@ class Worker extends Model
      *
      * @var array
      */
-    protected $casts = [
-        'active' => 'boolean',
-        'birth_date' => 'timestamp',
-        'hire_date' => 'timestamp',
-        'registered_at' => 'timestamp',
+    protected $dates = [
+    	'birth_date',
+	    'hire_date',
     ];
 
-
+	/**
+	 * That attributes that can be filled
+	 * @var array
+	 */
     protected $fillable = [
         'registration_number',
         'active',
