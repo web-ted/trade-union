@@ -13,125 +13,125 @@ use DB;
 
 class WorkerImportXls extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'worker:import';
+	/**
+	 * The name and signature of the console command.
+	 *
+	 * @var string
+	 */
+	protected $signature = 'worker:import';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Import xlsx files into workers table';
+	/**
+	 * The console command description.
+	 *
+	 * @var string
+	 */
+	protected $description = 'Import xlsx files into workers table';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+	/**
+	 * Create a new command instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
-    {
-        // $filename = 'mitroo_test.xlsx';
-        $filename = 'mitroo.xlsx';
-        $this->info('Reading xlsx file: '.$filename);
-        $rs = Excel::load($filename, function($reader) {})->get();
+	/**
+	 * Execute the console command.
+	 *
+	 * @return mixed
+	 */
+	public function handle()
+	{
+		// $filename = 'mitroo_test.xlsx';
+		$filename = 'mitroo.xlsx';
+		$this->info('Reading xlsx file: ' . $filename);
+		$rs = Excel::load($filename, function ($reader) {
+		})->get();
 
-        $this->info('Starting importing: '.$rs->count().' rows');
+		$this->info('Starting importing: ' . $rs->count() . ' rows');
 
-        DB::table('workers')->truncate();
-        Worker::unguard();
+		DB::table('workers')->truncate();
+		Worker::unguard();
 
-        foreach($rs as $row) {
-            list($surname, $name) = explode(' ', $row['onomatepwnymo']);
-            if(!empty($row['epaggelma'])) {
-                try {
-                    $specialty = Specialty::firstOrCreate([ 'name' => $row['epaggelma'] ]);
-                    $specialty_id = $specialty->id;
-                }
-                catch (\Exception $e) {
-                    $this->error('ERROR: Importing Specialty "'.$row['epaggelma']. '" failed');
-                    $this->error($e->getMessage());
-                    dd($row);
-                    exit;
-                }
-            } else {
-                $specialty_id = null;
-            }
+		foreach ($rs as $row) {
+			list($surname, $name) = explode(' ', $row['onomatepwnymo']);
+			if (!empty($row['epaggelma'])) {
+				try {
+					$specialty = Specialty::firstOrCreate(['name' => $row['epaggelma']]);
+					$specialty_id = $specialty->id;
+				} catch (\Exception $e) {
+					$this->error('ERROR: Importing Specialty "' . $row['epaggelma'] . '" failed');
+					$this->error($e->getMessage());
+					dd($row);
+					exit;
+				}
+			} else {
+				$specialty_id = null;
+			}
 
 
-            if($row['epixeirhsh']) {
-                try {
-                    $enterprise = Enterprise::firstOrCreate([ 'name' => $row['epixeirhsh'] ]);
-                    $enterprise_id = $enterprise->id;
-                }
-                catch (\Exception $e) {
-                    $this->error('ERROR: Importing Enterprise "'.$row['epixeirhsh']. '" failed');
-                    dd($row);
-                    exit;
-                }
-            } else {
-                $enterprise_id = null;
-            }
+			if ($row['epixeirhsh']) {
+				try {
+					$enterprise = Enterprise::firstOrCreate(['name' => $row['epixeirhsh']]);
+					$enterprise_id = $enterprise->id;
+				} catch (\Exception $e) {
+					$this->error('ERROR: Importing Enterprise "' . $row['epixeirhsh'] . '" failed');
+					dd($row);
+					exit;
+				}
+			} else {
+				$enterprise_id = null;
+			}
 
-            if(!is_null($row['etos_gennh_sews'])) {
-                if(preg_match("/^\d{4}$/", $row['etos_gennh_sews'])) {
-                    $row['etos_gennh_sews'] = $row['etos_gennh_sews']. '-01-01 00:00:00';
-                }
+			if (!is_null($row['etos_gennh_sews'])) {
+				if (preg_match("/^\d{4}$/", $row['etos_gennh_sews'])) {
+					$row['etos_gennh_sews'] = $row['etos_gennh_sews'] . '-01-01 00:00:00';
+				}
 
-                if(preg_match("/^\d{1,2}\/\d{1,2}\/\d{2,4}$/", $row['etos_gennh_sews'])) {
-                    // $parts = explode('/', $row['etos_gennh_sews'],3);
-                    $row['etos_gennh_sews'] = date_create_from_format("d/m/Y", $row['etos_gennh_sews'])->format('Y-m-d');
-                }
-            }
+				if (preg_match("/^\d{1,2}\/\d{1,2}\/\d{2,4}$/", $row['etos_gennh_sews'])) {
+					// $parts = explode('/', $row['etos_gennh_sews'],3);
+					$row['etos_gennh_sews'] = date_create_from_format("d/m/Y", $row['etos_gennh_sews'])->format('Y-m-d');
+				}
+			}
 
-            try {
-                $worker = [
-                    'active' => true,
-                    'registration_number' => (int) $row['aa'],
-                    'registered_at' => ($row['eggrafh'] instanceof Carbon)?$row['eggrafh']->toDateString():$row['eggrafh'],
-                    'first_name' => $name,
-                    'last_name' => $surname,
-                    'father_name' => $row['patrwnymo'],
-                    'birth_date' => $row['etos_gennh_sews'],
-                    'id_card' => $row['adt'],
-                    'phone' => $row['thlefwno'],
-                    'mobile_phone' => null,
-                    'email' => null,
-                    'address' => $row['dieyoynsh_katoikias'],
-                    'postal_code' => $row['tk'],
-                    'region' => null,
-                    'city' => $row['polh'],
-                    'hire_date' => null,
-                    'insurance_number' => null,
-                    'comment' => null,
-                    'enterprise_id' => $enterprise_id,
-                    'specialty_id' => $specialty_id,
-                    'created_at' => time(),
-                    'updated_at' => null,
-                ];
-                // dd($worker);
-                $result = Worker::create($worker);
-            }
-            catch(\Exception $e) {
-                $this->error('ERROR: Importing Worker "'.$row['onomatepwnymo']. '" failed');
-                $this->info($e->getMessage());
-                dd($row);
-                exit;
-            }
+			try {
+				$worker = [
+					'active'              => true,
+					'registration_number' => (int)$row['aa'],
+					'registered_at'       => ($row['eggrafh'] instanceof Carbon) ? $row['eggrafh']->toDateString() : $row['eggrafh'],
+					'first_name'          => $name,
+					'last_name'           => $surname,
+					'father_name'         => $row['patrwnymo'],
+					'birth_date'          => $row['etos_gennh_sews'],
+					'id_card'             => $row['adt'],
+					'phone'               => $row['thlefwno'],
+					'mobile_phone'        => null,
+					'email'               => null,
+					'address'             => $row['dieyoynsh_katoikias'],
+					'postal_code'         => $row['tk'],
+					'region'              => null,
+					'city'                => $row['polh'],
+					'hire_date'           => null,
+					'insurance_number'    => null,
+					'comment'             => null,
+					'enterprise_id'       => $enterprise_id,
+					'specialty_id'        => $specialty_id,
+					'created_at'          => time(),
+					'updated_at'          => null,
+				];
 
-        }
-    }
+				// dd($worker);
+				
+				$result = Worker::create($worker);
+			} catch (\Exception $e) {
+				$this->error('ERROR: Importing Worker "' . $row['onomatepwnymo'] . '" failed');
+				$this->info($e->getMessage());
+				dd($row);
+				exit;
+			}
+
+		}
+	}
 }
