@@ -17,20 +17,28 @@ $ cd trade-union
 $ composer install
 ```
 
-## Official Documentation
+### Create the Database Schema
+The database schema must be created manually and a user that will be able to manage this schema.
+For e.g. in case the database server is MySQL you can create a schema like this:
 
+```mysql
+CREATE SCHEMA `trade-union`;
+```
 or 
-
 ```mysql
 CREATE SCHEMA `schema-name-you-like`;
 ```
 
 Open a MySQL client connect to the database server and issue the above command replacing the name of the schema you like.
 I will use **trade-union** in this example, so replace this with your own.
+If you don't have an IDE capable to connect to the database (like MySQL Workbench) you can use the cli client.
+For e.g. issue this providing the password:
+```sh
+$ mysql -u root -h 127.0.0.1 -p
+```
 
-
-#### Configure the Database Connection
-You need to configure the project to connect to you database schema. Copy .env.example into .env file in the root
+### Configure the Database Connection and Structure
+You need to configure the app to connect to your database schema. Copy .env.example into .env file in the root
 folder/dir of the project:
 
 ```sh
@@ -66,7 +74,13 @@ Migration will create the following tables for **trade-union** schema:
 
 If the mysql user cannot connect then the migrations will probably fail. So you need to fix the .env
 
-## Deploy and run 
+### Seed Sample Data if you Need
+In case you need to see a demo of the app you can seed random data using:
+```sh
+$ php artisan db:seed
+```
+
+### Deploy and run 
 To run the app you need to deploy it to a php capable web server like apache or nginx.
 The public folder needs to be exposed as a document root. You may find instruction in the Laravel Framework [site.](https://laravel.com/docs/5.4/installation#pretty-urls)
 
