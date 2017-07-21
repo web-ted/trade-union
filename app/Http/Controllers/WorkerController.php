@@ -8,115 +8,131 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Mockery\Exception;
 
 class WorkerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return Worker::all();
-    }
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function index()
+	{
+		return Worker::all();
+	}
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return false;
-    }
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create()
+	{
+		return false;
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $worker = new Worker();
-        $workerAttributes = [
-            'active' => $request->get('active'),
-            'registration_number' => $request->get('registration_number'),
-            'registered_at' => $request->get('registered_at'),
-            'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
-            'father_name' => $request->get('father_name'),
-            'birth_date' => $request->get('birth_date'),
-            'id_card' => $request->get('id_card'),
-            'phone' => $request->get('phone'),
-            'mobile_phone' => $request->get('mobile_phone'),
-            'email' => $request->get('email'),
-            'address' => $request->get('address'),
-            'postal_code' => $request->get('postal_code'),
-            'region' => $request->get('region'),
-            'city' => $request->get('city'),
-            'hire_date' => $request->get('hire_date'),
-            'insurance_number' => $request->get('insurance_number'),
-            'comment' => $request->get('comment'),
-            'enterprise_id' => $request->get('enterprise_id'),
-            'specialty_id' => $request->get('specialty_id'),
-        ];
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request)
+	{
+		try {
+			$response = response();
 
-        foreach ($workerAttributes as $attrName => $attrVal) {
-            $worker->$attrName = $attrVal;
-        }
-        return $worker->save();
-    }
+			$worker = new Worker();
+			$workerAttributes = [
+				'active'              => $request->get('active'),
+				'registration_number' => $request->get('registration_number'),
+				'registered_at'       => $request->get('registered_at'),
+				'first_name'          => $request->get('first_name'),
+				'last_name'           => $request->get('last_name'),
+				'father_name'         => $request->get('father_name'),
+				'birth_date'          => $request->get('birth_date'),
+				'id_card'             => $request->get('id_card'),
+				'phone'               => $request->get('phone'),
+				'mobile_phone'        => $request->get('mobile_phone'),
+				'email'               => $request->get('email'),
+				'address'             => $request->get('address'),
+				'postal_code'         => $request->get('postal_code'),
+				'region'              => $request->get('region'),
+				'city'                => $request->get('city'),
+				'hire_date'           => $request->get('hire_date'),
+				'insurance_number'    => $request->get('insurance_number'),
+				'comment'             => $request->get('comment'),
+				'enterprise_id'       => $request->get('enterprise_id'),
+				'specialty_id'        => $request->get('specialty_id'),
+			];
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+			foreach ($workerAttributes as $attrName => $attrVal) {
+				$worker->$attrName = $attrVal;
+			}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return Worker::findOrFail($id);
-    }
+			if (!$worker->save()) {
+				throw new \Exception("Cannot save worker: " . implode(',', $worker->errors()->all()));
+			}
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        return Worker::where('id', $id)->update($request->all());
-    }
+			$response->json($worker);
+		} catch (\Exception $e) {
+			$response->setStatusCode(400);
+			$response->json(['status' => 'error', 'message' => "Cannot save worker: " . $e->getMessage()]);
+		}
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        return Worker::where('id', $id)->delete();
-    }
+		return $response;
 
-    public function nextRegistrationNumber()
-    {
-        $maxRegNumber = DB::table('workers')->max('registration_number');
-        return response()->json(['maxRegistrationNumber' => $maxRegNumber]);
-    }
+	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show($id)
+	{
+		//
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit($id)
+	{
+		return Worker::findOrFail($id);
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request $request
+	 * @param  int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, $id)
+	{
+		return Worker::where('id', $id)->update($request->all());
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id)
+	{
+		return Worker::where('id', $id)->delete();
+	}
+
+	public function nextRegistrationNumber()
+	{
+		$maxRegNumber = DB::table('workers')->max('registration_number');
+		return response()->json(['maxRegistrationNumber' => $maxRegNumber]);
+	}
 }
