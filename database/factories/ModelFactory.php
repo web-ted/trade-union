@@ -24,11 +24,11 @@ $factory->define(App\Worker::class, function (Faker\Generator $faker) {
 	return [
 		'active'              => 1,
 		'registration_number' => $faker->unique()->randomNumber(3),
-		'registered_at'       => $faker->date('Y-m-d', "3 days ago"),
+		'registered_at'       => $faker->date('Y-m-d', "3 weeks ago"),
 		'first_name'          => $faker->firstName,
 		'last_name'           => $faker->lastName,
 		'father_name'         => $faker->firstName,
-		'birth_date'          => $faker->date('Y-m-d', "3 year ago"),
+		'birth_date'          => $faker->date('Y-m-d', "18 year ago"),
 		'id_card'             => $faker->creditCardNumber,
 		'phone'               => $faker->phoneNumber,
 		'mobile_phone'        => $faker->phoneNumber,
