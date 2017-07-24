@@ -39,9 +39,8 @@
                         <span class="glyphicon" ng-show="predicate === 'registration_number'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Registration Number
                     </th>
-                    <th ng-click="order('first_name')" class="btn">
-                        <span class="glyphicon" ng-show="predicate === 'first_name'"
-                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                    <th ng-click="order('first_name')" role="button">
+                        <span class="glyphicon" ng-show="predicate === 'first_name'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         First Name
                     </th>
                     <th ng-click="order('last_name')">
