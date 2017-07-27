@@ -47,22 +47,22 @@
                               ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         First Name
                     </th>
-                    <th ng-click="order('last_name')">
+                    <th ng-click="order('last_name')" role="button">
                         <span class="glyphicon" ng-show="predicate === 'last_name'"
                               ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Last Name
                     </th>
-                    <th ng-click="order('father_name')">
+                    <th ng-click="order('father_name')" role="button">
                         <span class="glyphicon" ng-show="predicate === 'father_name'"
                               ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Father's Name
                     </th>
-                    <th ng-click="order('phone')">
+                    <th ng-click="order('phone')" role="button">
                         <span class="glyphicon" ng-show="predicate === 'phone'"
                               ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Phone
                     </th>
-                    <th ng-click="order('mobile_phone')">
+                    <th ng-click="order('mobile_phone')" role="button">
                         <span class="glyphicon" ng-show="predicate === 'mobile_phone'"
                               ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Cell Phone
@@ -217,7 +217,8 @@
                             </div>
                             <div class="checkbox">
                                 <label>
-                                    <input ng-model="entry.active" type="checkbox" id="workerActive"> Active
+                                    <input type="checkbox" id="workerActive" ng-model="entry.active" ng-true-value="1"
+                                           ng-false-value="0"> Active
                                 </label><br>
                                 <small class="text-muted">Inactive members are those that were removed</small>
                             </div>
@@ -263,7 +264,8 @@
                         <uib-tab heading="Work Position">
                             <div class="form-group">
                                 <label for="workerEnterprise">Enterprise</label>
-                                <select name="workerEnterpriseProp" id="workerEnterprise" class="form-control" ng-model="entry.enterprise_id"
+                                <select name="workerEnterpriseProp" id="workerEnterprise" class="form-control"
+                                        ng-model="entry.enterprise_id"
                                         ng-options="enterprise.id as enterprise.name for enterprise in enterprises"></select>
                             </div>
                             <div class="form-group">
@@ -287,6 +289,11 @@
                                     </span>
                                 </div>
                             </div>
+                        </uib-tab>
+                        <uib-tab heading="Debug">
+                            <pre>
+                                {{entry | json}}
+                            </pre>
                         </uib-tab>
                     </uib-tabset>
                 </form>
