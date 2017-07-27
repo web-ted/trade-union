@@ -41,8 +41,6 @@ class WorkerController extends Controller
 	public function store(Request $request)
 	{
 		try {
-			$response = response();
-
 			$worker = new Worker();
 			$workerAttributes = [
 				'active'              => $request->get('active'),
@@ -75,13 +73,27 @@ class WorkerController extends Controller
 				throw new \Exception("Cannot save worker: " . implode(',', $worker->errors()->all()));
 			}
 
-			$response->json($worker);
+			$jsonResponse = [
+				'response' => $worker,
+				'response' => [
+					'status'  => 'success',
+					'message' => "Worker was created successfully",
+					'worker'  => $worker
+				],
+				'status'   => 200
+			];
+
 		} catch (\Exception $e) {
-			$response->setStatusCode(400);
-			$response->json(['status' => 'error', 'message' => "Cannot save worker: " . $e->getMessage()]);
+			$jsonResponse = [
+				'response' => [
+					'status'  => 'error',
+					'message' => "Cannot save worker: " . $e->getMessage()
+				],
+				'status'   => 400
+			];
 		}
 
-		return $response;
+		return response()->json($jsonResponse['response'], $jsonResponse['status']);
 
 	}
 
@@ -93,7 +105,29 @@ class WorkerController extends Controller
 	 */
 	public function show($id)
 	{
-		//
+		try {
+			$worker = Worker::findOrFail($id);
+			$jsonResponse = [
+				'response' => $worker,
+				'response' => [
+					'status'  => 'success',
+					'message' => "Worker was found successfully",
+					'worker'  => $worker
+				],
+				'status'   => 200
+			];
+		} catch(\Exception $e) {
+			$jsonResponse = [
+				'response' => [
+					'status'  => 'error',
+					'message' => "Worker with id: $id was not found",
+					'worker'  => false
+				],
+				'status'   => 404
+			];
+		}
+
+		return response()->json($jsonResponse['response'], $jsonResponse['status']);
 	}
 
 	/**
@@ -116,7 +150,60 @@ class WorkerController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		return Worker::where('id', $id)->update($request->all());
+		try {
+			$workerAttributes = [
+				'active'              => $request->get('active'),
+				'registration_number' => $request->get('registration_number'),
+				'registered_at'       => $request->get('registered_at'),
+				'first_name'          => $request->get('first_name'),
+				'last_name'           => $request->get('last_name'),
+				'father_name'         => $request->get('father_name'),
+				'birth_date'          => $request->get('birth_date'),
+				'id_card'             => $request->get('id_card'),
+				'phone'               => $request->get('phone'),
+				'mobile_phone'        => $request->get('mobile_phone'),
+				'email'               => $request->get('email'),
+				'address'             => $request->get('address'),
+				'postal_code'         => $request->get('postal_code'),
+				'region'              => $request->get('region'),
+				'city'                => $request->get('city'),
+				'hire_date'           => $request->get('hire_date'),
+				'insurance_number'    => $request->get('insurance_number'),
+				'comment'             => $request->get('comment'),
+				'enterprise_id'       => $request->get('enterprise_id'),
+				'specialty_id'        => $request->get('specialty_id'),
+			];
+
+			$worker = Worker::find($id);
+
+			foreach ($workerAttributes as $attrName => $attrVal) {
+				$worker->$attrName = $attrVal;
+			}
+
+			if (!$worker->save()) {
+				throw new \Exception("Cannot update worker: " . implode(',', $worker->errors()->all()));
+			}
+
+			$jsonResponse = [
+				'response' => [
+					'status'  => 'success',
+					'message' => "Worker was updated successfully",
+					'worker'  => $worker
+				],
+				'status'   => 200
+			];
+
+		} catch (\Exception $e) {
+			$jsonResponse = [
+				'response' => [
+					'status'  => 'error',
+					'message' => "Cannot update worker: " . $e->getMessage()
+				],
+				'status'   => 400
+			];
+		}
+
+		return response()->json($jsonResponse['response'], $jsonResponse['status']);
 	}
 
 	/**
@@ -127,7 +214,30 @@ class WorkerController extends Controller
 	 */
 	public function destroy($id)
 	{
-		return Worker::where('id', $id)->delete();
+		try {
+			$worker = Worker::findOrFail($id);
+			$worker->delete();
+
+			$jsonResponse = [
+				'response' => [
+					'status'  => 'success',
+					'message' => "Worker was deleted successfully",
+					'worker'  => $worker
+				],
+				'status'   => 200
+			];
+
+		} catch (\Exception $e) {
+			$jsonResponse = [
+				'response' => [
+					'status'  => 'error',
+					'message' => "Cannot delete worker: " . $e->getMessage()
+				],
+				'status'   => 400
+			];
+		}
+
+		return response()->json($jsonResponse['response'], $jsonResponse['status']);
 	}
 
 	public function nextRegistrationNumber()
