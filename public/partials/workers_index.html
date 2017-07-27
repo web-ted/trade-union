@@ -1,9 +1,16 @@
 <div class="container">
     <div class="row">
         <ol class="breadcrumb">
-            <li><a href="#/dashboard">Home</a></li>
-            <li class="active">Workers</li>
-            <li class="active">Index</li>
+            <li>
+                <a href="#!/dashboard">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="#!/workers">
+                    Workers
+                </a>
+            </li>
         </ol>
     </div>
     <div class="panel panel-default">
@@ -97,7 +104,7 @@
         <div class="panel-footer">
             <div class="row">
                 <div class="col-md-8">
-                    <button type="button" class="btn btn-primary" ng-click="editWorker()" data-toggle="modal"
+                    <button type="button" class="btn btn-primary" ng-click="addWorker()" data-toggle="modal"
                             data-target="#editWorker" aria-label="Add Worker"><span
                             class="glyphicon glyphicon-plus-sign"></span> Add New Worker
                     </button>
