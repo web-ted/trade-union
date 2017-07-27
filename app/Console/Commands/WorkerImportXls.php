@@ -44,8 +44,7 @@ class WorkerImportXls extends Command
 	 */
 	public function handle()
 	{
-		// $filename = 'mitroo_test.xlsx';
-		$filename = 'mitroo.xlsx';
+		$filename = base_path('files') . DIRECTORY_SEPARATOR . 'mitroo.xlsx';
 		$this->info('Reading xlsx file: ' . $filename);
 		$rs = Excel::load($filename, function ($reader) {
 		})->get();
@@ -100,17 +99,17 @@ class WorkerImportXls extends Command
 				$worker = [
 					'active'              => true,
 					'registration_number' => (int)$row['aa'],
-					'registered_at'       => ($row['eggrafh'] instanceof Carbon) ? $row['eggrafh']->toDateString() : $row['eggrafh'],
+					'registered_at'       => ($row['eggrafh'] instanceof Carbon) ? $row['eggrafh']->toW3cString() : $row['eggrafh'],
 					'first_name'          => $name,
 					'last_name'           => $surname,
 					'father_name'         => $row['patrwnymo'],
 					'birth_date'          => $row['etos_gennh_sews'],
-					'id_card'             => $row['adt'],
+					'id_card'             => $row['a.d.t.'],
 					'phone'               => $row['thlefwno'],
 					'mobile_phone'        => null,
 					'email'               => null,
 					'address'             => $row['dieyoynsh_katoikias'],
-					'postal_code'         => $row['tk'],
+					'postal_code'         => $row['tk'] ?? null,
 					'region'              => null,
 					'city'                => $row['polh'],
 					'hire_date'           => null,
