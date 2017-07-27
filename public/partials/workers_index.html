@@ -10,7 +10,9 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-2">
-                    <h5>Workers Index &nbsp;&nbsp;<span ng-click="loadAll()" title="Reload Members Index" class="glyphicon glyphicon-refresh" ng-class="{ 'spin':reloading }" role="button"></span></h5>
+                    <h5>Workers Index &nbsp;&nbsp;<span ng-click="loadAll()" title="Reload Members Index"
+                                                        class="glyphicon glyphicon-refresh"
+                                                        ng-class="{ 'spin':reloading }" role="button"></span></h5>
                 </div>
                 <div class="col-md-3 col-md-offset-7">
                     <div class="input-group input-group-sm">
@@ -36,11 +38,13 @@
                 <thead>
                 <tr>
                     <th ng-click="order('registration_number')" role="button">
-                        <span class="glyphicon" ng-show="predicate === 'registration_number'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        <span class="glyphicon" ng-show="predicate === 'registration_number'"
+                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Registration Number
                     </th>
                     <th ng-click="order('first_name')" role="button">
-                        <span class="glyphicon" ng-show="predicate === 'first_name'" ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        <span class="glyphicon" ng-show="predicate === 'first_name'"
+                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         First Name
                     </th>
                     <th ng-click="order('last_name')">
@@ -134,15 +138,17 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" ng-show="action == 'update'">Update: {{entry.first_name}} {{entry.last_name}} (Α.Μ. {{entry.registration_number}})</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" ng-show="action == 'update'">Update: {{entry.first_name}} {{entry.last_name}}
+                    (Α.Μ. {{entry.registration_number}})</h4>
                 <h4 class="modal-title" ng-show="action == 'create'">Create New Worker Entry</h4>
                 <h4 class="modal-title" ng-show="!entry">Create a New Member</h4>
             </div>
             <div class="modal-body">
                 <form name="EditWorkerForm">
-                <uib-tabset>
-                    <uib-tab heading="Personal">
+                    <uib-tabset>
+                        <uib-tab heading="Personal">
                             <div class="form-group">
                                 <label for="workerFirstName">First Name</label>
                                 <input ng-model="entry.first_name" ng-required="true" type="text" class="form-control"
@@ -150,11 +156,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="workerLastName">Last Name</label>
-                                <input ng-model="entry.last_name" ng-required="true" type="text" class="form-control" id="workerLastName" placeholder="Enter last name">
+                                <input ng-model="entry.last_name" ng-required="true" type="text" class="form-control"
+                                       id="workerLastName" placeholder="Enter last name">
                             </div>
                             <div class="form-group">
                                 <label for="workerFatherName">Father's Name</label>
-                                <input ng-model="entry.father_name" ng-required="true" type="text" class="form-control" id="workerFatherName" placeholder="Enter father's name">
+                                <input ng-model="entry.father_name" ng-required="true" type="text" class="form-control"
+                                       id="workerFatherName" placeholder="Enter father's name">
                             </div>
                             <div class="form-group">
                                 <label for="workerBirthDate">Birth Date</label>
@@ -254,21 +262,15 @@
                         </uib-tab>
                         <uib-tab heading="Work Position">
                             <div class="form-group">
-                                <label for="workerEnterprise">Specialty</label>
-                                <select id="workerEnterprise" ng-model="entry.enterprise_id" class="form-control">
-                                    <option value=""></option>
-                                    <option ng-repeat="enterprise in enterprises" value="{{enterprise.id}}">{{enterprise.name}}
-                                    </option>
-                                </select>
+                                <label for="workerEnterprise">Enterprise</label>
+                                <select name="workerEnterpriseProp" id="workerEnterprise" class="form-control" ng-model="entry.enterprise_id"
+                                        ng-options="enterprise.id as enterprise.name for enterprise in enterprises"></select>
                             </div>
                             <div class="form-group">
                                 <label for="workerSpecialty">Specialty</label>
-                                <select id="workerSpecialty" ng-model="entry.specialty_id" class="form-control">
-                                    <option value=""></option>
-                                    <option ng-repeat="specialty in specialties" value="{{specialty.id}}">
-                                        {{specialty.name}}
-                                    </option>
-                                </select>
+                                <select name="workerSpecialtyProp" id="workerSpecialty" class="form-control"
+                                        ng-model="entry.specialty_id"
+                                        ng-options="specialty.id as specialty.name for specialty in specialties"></select>
                             </div>
                             <div class="form-group">
                                 <label for="workerHireDate">Hire Date</label>
@@ -291,8 +293,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="action == 'update'" ng-click="updateWorker(entry)" ng-disabled="!EditWorkerForm.$valid">Save changes</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="action == 'create'" ng-click="createWorker(entry)" ng-disabled="!EditWorkerForm.$valid">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="action == 'update'"
+                        ng-click="updateWorker(entry)" ng-disabled="!EditWorkerForm.$valid">Save changes
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="action == 'create'"
+                        ng-click="createWorker(entry)" ng-disabled="!EditWorkerForm.$valid">Save changes
+                </button>
             </div>
         </div>
     </div>
