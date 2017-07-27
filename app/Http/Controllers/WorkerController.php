@@ -77,8 +77,8 @@ class WorkerController extends Controller
 			$jsonResponse = [
 				'response' => $worker,
 				'response' => [
-					'status'  => 'success',
-					'message' => "Worker was created successfully",
+					'status'  => 'Success',
+					'message' => "Worker " . $worker->first_name . " " . $worker->last_name . " was created successfully",
 					'worker'  => $worker
 				],
 				'status'   => 200
@@ -87,7 +87,7 @@ class WorkerController extends Controller
 		} catch (\Exception $e) {
 			$jsonResponse = [
 				'response' => [
-					'status'  => 'error',
+					'status'  => 'Error',
 					'message' => "Cannot save worker: " . $e->getMessage()
 				],
 				'status'   => 400
@@ -117,7 +117,7 @@ class WorkerController extends Controller
 				],
 				'status'   => 200
 			];
-		} catch(\Exception $e) {
+		} catch (\Exception $e) {
 			$jsonResponse = [
 				'response' => [
 					'status'  => 'error',
@@ -175,7 +175,7 @@ class WorkerController extends Controller
 				'specialty_id'        => $request->get('specialty_id'),
 			];
 
-			$worker = Worker::find($id);
+			$worker = Worker::findOrFail($id);
 
 			foreach ($workerAttributes as $attrName => $attrVal) {
 				$worker->$attrName = $attrVal;
@@ -187,13 +187,21 @@ class WorkerController extends Controller
 
 			$jsonResponse = [
 				'response' => [
-					'status'  => 'success',
-					'message' => "Worker was updated successfully",
+					'status'  => 'Success',
+					'message' => "Worker " . $worker->first_name . " " . $worker->last_name . " was updated successfully",
 					'worker'  => $worker
 				],
 				'status'   => 200
 			];
 
+		} catch (ModelNotFoundException $n) {
+			$jsonResponse = [
+				'response' => [
+					'status'  => 'Member Not Found',
+					'message' => "Cannot update worker with id: " . $id . ". He was not found."
+				],
+				'status'   => 404
+			];
 		} catch (\Exception $e) {
 			$jsonResponse = [
 				'response' => [
@@ -227,7 +235,7 @@ class WorkerController extends Controller
 				],
 				'status'   => 200
 			];
-		} catch(ModelNotFoundException $n) {
+		} catch (ModelNotFoundException $n) {
 			$jsonResponse = [
 				'response' => [
 					'status'  => 'Member Not Found',
