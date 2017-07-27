@@ -2,7 +2,7 @@
  * Created by sulimo on 17/1/2016.
  */
 angular.module('TradeUnion')
-    .controller('WorkersController', function ($scope, $filter, Worker, Specialty, Enterprise) {
+    .controller('WorkersController', function ($scope, $filter, toastr, Worker, Specialty, Enterprise) {
         $scope.currentPage = 1;
         $scope.begin = 0;
         $scope.itemsPerPage = 5;
@@ -11,8 +11,6 @@ angular.module('TradeUnion')
         $scope.boundaryLinks = true;
         $scope.showPagination = true;
 
-        //$scope.predicate = 'last_name';
-        //$scope.reverse = false;
         $scope.datePickerOptions = {
             dateDisabled: false,
             formatDay: 'dd',
@@ -21,10 +19,17 @@ angular.module('TradeUnion')
         };
 
         $scope.reloadMembers = function() {
+            var workers, workersRefined = [];
             $scope.reloading = true;
-            $scope.workers =  Worker.query({}, function(response) {
-                console.log(angular.copy(response));
-                // angular.forEach($scope.workers, function (value) {  }, );
+            workers =  Worker.query({}, function() {
+                angular.forEach(workers, function (value) {
+                    value.registered_at = new Date(value.registered_at);
+                    value.created_at = new Date(value.created_at);
+                    value.birth_date = new Date(value.birth_date);
+                    value.hire_date = new Date(value.hire_date);
+                    workersRefined.push(value);
+                }, workersRefined);
+                $scope.workers = workersRefined;
                 $scope.reloading = false;
             }, function() {
                 $scope.reloading = false;
@@ -94,8 +99,7 @@ angular.module('TradeUnion')
         };
 
         $scope.editWorker = function (record) {
-            // var entry = angular.copy($scope.workers[$scope.workers.indexOf(record)]);
-            var entry = $scope.workers[$scope.workers.indexOf(record)];
+            var entry = angular.copy($scope.workers[$scope.workers.indexOf(record)]);
 
             $scope.action = 'update';
             $scope.originalEntry = entry;
@@ -115,11 +119,18 @@ angular.module('TradeUnion')
 
         $scope.deleteWorker = function (record) {
             Worker.delete({id: record.id}, function (response) {
-                var data = response.data;
+                console.log(response);
+                var status = response.status || 'Success',
+                    message = response.message || "Removed successfully";
 
-                if(data == 1) {
-                    $scope.workers.splice($scope.workers.indexOf(record), 1);
-                } // TODO: You need to add notification on failure
+                toastr.success(message, status);
+                $scope.loadAll();
+            }, function (response) {
+                var data = response.data,
+                    status = data.status || 'Error',
+                    message = data.message || "Removed successfully";
+
+                toastr.error(message, status);
             });
         };
 
