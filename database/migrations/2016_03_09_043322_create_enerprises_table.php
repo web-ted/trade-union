@@ -16,16 +16,16 @@ class CreateEnerprisesTable extends Migration
         Schema::create('enterprises', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('address');
-            $table->string('region');
-            $table->string('phone');
-            $table->string('fax');
-            $table->string('email');
-            $table->string('city');
-            $table->date('founded');
-            $table->integer('workers_number');
-            $table->string('owners');
-            $table->string('business_activity');
+            $table->string('address')->nullable();
+            $table->string('region')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('fax')->nullable();
+            $table->string('email')->nullable();
+            $table->string('city')->nullable();
+            $table->date('founded')->nullable();
+            $table->integer('workers_number')->nullable();
+            $table->string('owners')->nullable();
+            $table->string('business_activity')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
