@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Worker;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -220,20 +221,27 @@ class WorkerController extends Controller
 
 			$jsonResponse = [
 				'response' => [
-					'status'  => 'success',
-					'message' => "Worker was deleted successfully",
+					'status'  => 'Success',
+					'message' => "Worker: " . $worker->first_name . " " . $worker->last_name . " was deleted successfully",
 					'worker'  => $worker
 				],
 				'status'   => 200
 			];
-
+		} catch(ModelNotFoundException $n) {
+			$jsonResponse = [
+				'response' => [
+					'status'  => 'Member Not Found',
+					'message' => "Cannot find worker with id: " . $id
+				],
+				'status'   => 404
+			];
 		} catch (\Exception $e) {
 			$jsonResponse = [
 				'response' => [
-					'status'  => 'error',
-					'message' => "Cannot delete worker: " . $e->getMessage()
+					'status'  => 'Error',
+					'message' => $e->getMessage()
 				],
-				'status'   => 400
+				'status'   => 500
 			];
 		}
 
