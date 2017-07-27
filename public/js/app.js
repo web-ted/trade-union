@@ -1,7 +1,7 @@
 /**
  * Created by sulimo on 17/1/2016.
  */
-angular.module('TradeUnion', ['ngRoute', 'ngResource', 'ui.bootstrap'])
+angular.module('TradeUnion', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngAnimate', 'toastr'])
     .config(function($routeProvider) {
         $routeProvider
             .when('/worker', {
@@ -11,4 +11,16 @@ angular.module('TradeUnion', ['ngRoute', 'ngResource', 'ui.bootstrap'])
             .otherwise({
                 redirectTo: '/worker'
             });
+    })
+    .config(function(toastrConfig) {
+        angular.extend(toastrConfig, {
+            autoDismiss: false,
+            containerId: 'toast-container',
+            maxOpened: 0,
+            newestOnTop: true,
+            positionClass: 'toast-top-right',
+            preventDuplicates: false,
+            preventOpenDuplicates: false,
+            target: 'body'
+        });
     });
