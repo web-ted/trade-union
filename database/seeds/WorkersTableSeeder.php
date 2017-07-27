@@ -13,6 +13,6 @@ class WorkersTableSeeder extends Seeder
     public function run()
     {
         // Artisan::call("worker:import");
-        factory(App\Worker::class, 200)->create();
+        factory(App\Worker::class, 1000)->create();
     }
 }
