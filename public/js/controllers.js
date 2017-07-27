@@ -69,7 +69,7 @@ angular.module('TradeUnion')
 
         $scope.searching = function () {
             if ($scope.search == '') {
-                $scope.itemsPerPage = 10;
+                $scope.itemsPerPage = 5;
                 $scope.begin = 0;
                 $scope.showPagination = true;
             } else {
