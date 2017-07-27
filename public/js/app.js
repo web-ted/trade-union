@@ -8,6 +8,10 @@ angular.module('TradeUnion', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngAnimat
                 templateUrl: 'partials/workers_index.html',
                 controller: 'WorkersController'
             })
+            .when('/enterprise', {
+                templateUrl: 'partials/enterprise_index.html',
+                controller: 'EnterprisesController'
+            })
             .otherwise({
                 redirectTo: '/worker'
             });
