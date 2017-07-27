@@ -1,0 +1,245 @@
+<div class="container">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li>
+                <a href="#!/dashboard">
+                    Home
+                </a>
+            </li>
+            <li class="active">
+                <a href="#!/enterprise">
+                    Enterprises
+                </a>
+            </li>
+        </ol>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Workers Index &nbsp;&nbsp;<span ng-click="loadAll()" title="Reload Members Index"
+                                                        class="glyphicon glyphicon-refresh"
+                                                        ng-class="{ 'spin':reloading }" role="button"></span></h5>
+                </div>
+                <div class="col-md-3 col-md-offset-7">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                        <input type="text" class="form-control" ng-change="searching()" ng-model="search">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" title="Clear Search Box" type="button"
+                                    ng-click="clearSearch()">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th ng-click="order('name')" role="button">
+                        <span class="glyphicon" ng-show="predicate === 'name'"
+                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        Name
+                    </th>
+                    <th ng-click="order('owners')" role="button">
+                        <span class="glyphicon" ng-show="predicate === 'owners'"
+                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        Owners
+                    </th>
+                    <th ng-click="order('address')" role="button">
+                        <span class="glyphicon" ng-show="predicate === 'address'"
+                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        Address
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+                </thead>
+                <tr ng-repeat="member in members | orderBy: predicate : reverse | limitTo: itemsPerPage : begin | filter: search">
+                    <td>{{member.name}}</td>
+                    <td>{{member.owners}}</td>
+                    <td>{{member.address}}</td>
+                    <td>
+                        <button title="Edit Member" type="button" class="btn btn-primary btn-sm"
+                                aria-label="Edit Member" ng-click="editMember(member)" data-toggle="modal"
+                                data-target="#editMember">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </button>
+                        <button title="Delete Member" type="button" ng-click="editMember(member)"
+                                class="btn btn-danger btn-sm" aria-label="Delete Worker" data-toggle="modal"
+                                data-target="#confirmMemberDeletion">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" class="btn btn-primary" ng-click="addMember()" data-toggle="modal"
+                            data-target="#editMember" aria-label="Add Enterprise"><span
+                            class="glyphicon glyphicon-plus-sign"></span> Add New Enterprise
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="exportWorkers()"
+                            aria-label="Export Workers"><span class="glyphicon glyphicon-save-file"></span> Export List
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="exportWorkers()"
+                            aria-label="Export Workers"><span class="glyphicon glyphicon-copy"></span> Import...
+                    </button>
+                    <!--Showing {{itemsPerPage}} workers per page-->
+                </div>
+                <div class="col-md-4" ng-show="showPagination">
+                    <uib-pagination
+                            total-items="workers.length"
+                            ng-model="currentPage"
+                            class="pagination-sm pull-right"
+                            boundary-links="true"
+                            force-ellipses="false"
+                            rotate="true"
+                            items-per-page="itemsPerPage"
+                            num-pages="numPages"
+                            max-size="5"
+                            previous-text="&lsaquo;"
+                            next-text="&rsaquo;"
+                            first-text="&laquo;"
+                            last-text="&raquo;"
+                            ng-click="setPage(currentPage)"
+                            ng-disabled="paginationDisable">
+                    </uib-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Worker Modal -->
+<div class="modal fade" id="editMember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" ng-show="action == 'update'">Update: {{entry.name}}
+                    (Α.Μ. {{entry.registration_number}})</h4>
+                <h4 class="modal-title" ng-show="action == 'create'">Create New Worker Entry</h4>
+                <h4 class="modal-title" ng-show="!entry">Create a New Member</h4>
+            </div>
+            <div class="modal-body">
+                <form name="EditMemberForm">
+                    <uib-tabset>
+                        <uib-tab heading="Basic">
+                            <div class="form-group">
+                                <label for="memberName">Name</label>
+                                <input ng-model="entry.name" ng-required="true" class="form-control"
+                                       id="memberName" placeholder="Enter Company Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="memberBusinessActivity">Business Activity</label>
+                                <input ng-model="entry.business_activity" class="form-control"
+                                       id="memberBusinessActivity" placeholder="Enter Business Activity">
+                            </div>
+                            <div class="form-group">
+                                <label for="memberNoOfWorkers">Number of Workers</label>
+                                <input ng-model="entry.workers_number" type="number" min="1" class="form-control"
+                                       id="memberNoOfWorkers" placeholder="Number of Workers">
+                            </div>
+                            <div class="form-group">
+                                <label for="memberBusinessActivity">Owners</label>
+                                <input ng-model="entry.owners" class="form-control"
+                                       id="memberOwners" placeholder="Company Owners">
+                            </div>
+                            <div class="form-group">
+                                <label for="memberFoundedDate">Founded Date</label>
+                                <div class="input-group">
+                                    <input ng-model="entry.founded"
+                                           uib-datepicker-options="datePickerOptions" readonly
+                                           uib-datepicker-popup="yyyy-MM-dd" is-open="foundedDateOpened"
+                                           class="form-control" id="memberFoundedDate"
+                                           placeholder="Pick founded date with the picker">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="foundedDateOpened=1">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="Location And Contact Info">
+                            <div class="form-group">
+                                <label for="memberCity">City</label>
+                                <input ng-model="entry.city" ng-required="true" class="form-control"
+                                       id="memberCity" placeholder="Enter Company's City Main Location">
+                            </div>
+                            <div class="form-group">
+                                <label for="memberAddress">Address</label>
+                                <input ng-model="entry.address" ng-required="true" class="form-control"
+                                       id="memberAddress" placeholder="Enter Company's Address">
+                            </div>
+                            <div class="form-group">
+                                <label for="memberRegion">Region</label>
+                                <input ng-model="entry.region" class="form-control"
+                                       id="memberRegion" placeholder="Enter Company's Location Region">
+                            </div>
+                            <div class="form-group">
+                                <label for="memberPhone">Phone</label>
+                                <input ng-model="entry.phone" class="form-control"
+                                       id="memberPhone" placeholder="Enter Company's Phone Number">
+                            </div>
+                            <div class="form-group">
+                                <label for="memberFax">Fax</label>
+                                <input ng-model="entry.fax" class="form-control"
+                                       id="memberFax" placeholder="Enter Company's Fax Number">
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="Debug">
+                            <pre>
+                                {{entry | json}}
+                            </pre>
+                        </uib-tab>
+                    </uib-tabset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="action == 'update'"
+                        ng-click="updateMember(entry)" ng-disabled="!EditMemberForm.$valid">Save changes
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="action == 'create'"
+                        ng-click="createMember(entry)" ng-disabled="!EditMemberForm.$valid">Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm Worker Deletion Modal -->
+<div class="modal fade" id="confirmMemberDeletion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="confirmLabel">Confirm Deletion</h4>
+            </div>
+            <div class="modal-body">
+                Delete member {{entry.name}} ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteMember(entry)">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
