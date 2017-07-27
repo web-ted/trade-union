@@ -20,7 +20,8 @@ class WorkerController extends Controller
 	 */
 	public function index()
 	{
-		return Worker::all();
+		// return Worker::all();
+		return Worker::with(['specialty', 'enterprise'])->get();
 	}
 
 	/**

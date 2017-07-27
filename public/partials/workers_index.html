@@ -59,15 +59,15 @@
                               ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
                         Last Name
                     </th>
-                    <th ng-click="order('father_name')" role="button">
-                        <span class="glyphicon" ng-show="predicate === 'father_name'"
+                    <th ng-click="order('enterprise_id')" role="button">
+                        <span class="glyphicon" ng-show="predicate === 'enterprise_id'"
                               ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
-                        Father's Name
+                        Enterprise
                     </th>
-                    <th ng-click="order('phone')" role="button">
-                        <span class="glyphicon" ng-show="predicate === 'phone'"
+                    <th ng-click="order('specialty_id')" role="button">
+                        <span class="glyphicon" ng-show="predicate === 'specialty_id'"
                               ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
-                        Phone
+                        Specialty
                     </th>
                     <th ng-click="order('mobile_phone')" role="button">
                         <span class="glyphicon" ng-show="predicate === 'mobile_phone'"
@@ -83,8 +83,8 @@
                     <td>{{worker.registration_number}}</td>
                     <td>{{worker.first_name}}</td>
                     <td>{{worker.last_name}}</td>
-                    <td>{{worker.father_name}}</td>
-                    <td>{{worker.phone}}</td>
+                    <td>{{worker.enterprise.name}}</td>
+                    <td>{{worker.specialty.name}}</td>
                     <td>{{worker.mobile_phone}}</td>
                     <td>
                         <button title="Edit Member" type="button" class="btn btn-primary btn-sm"

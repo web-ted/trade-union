@@ -162,7 +162,7 @@ class Worker extends Model
      */
     public function specialty()
     {
-        return $this->hasOne('App\Specialty');
+        return $this->belongsTo('App\Specialty');
     }
 
     /**
@@ -170,6 +170,6 @@ class Worker extends Model
      */
     public function enterprise()
     {
-        return $this->hasOne('App\Enterprise');
+        return $this->belongsTo('App\Enterprise');
     }
 }
