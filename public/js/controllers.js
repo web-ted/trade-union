@@ -18,6 +18,7 @@ angular.module('TradeUnion')
         $scope.forceEclipses = true;
         $scope.boundaryLinks = true;
         $scope.showPagination = true;
+        $scope.paginationDisable = false;
 
         $scope.datePickerOptions = {
             dateDisabled: false,
@@ -159,6 +160,7 @@ angular.module('TradeUnion')
         $scope.forceEclipses = true;
         $scope.boundaryLinks = true;
         $scope.showPagination = true;
+        $scope.paginationDisable = false;
 
         $scope.datePickerOptions = {
             dateDisabled: false,

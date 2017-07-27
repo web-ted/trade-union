@@ -116,24 +116,24 @@
                     </button>
                     <!--Showing {{itemsPerPage}} workers per page-->
                 </div>
-                <div class="col-md-4" ng-show="showPagination">
-                    <uib-pagination
-                            total-items="workers.length"
-                            ng-model="currentPage"
-                            class="pagination-sm pull-right"
-                            boundary-links="true"
-                            force-ellipses="false"
-                            rotate="true"
-                            items-per-page="itemsPerPage"
-                            num-pages="numPages"
-                            max-size="5"
-                            previous-text="&lsaquo;"
-                            next-text="&rsaquo;"
-                            first-text="&laquo;"
-                            last-text="&raquo;"
-                            ng-click="setPage(currentPage)"
-                            ng-disabled="paginationDisable">
-                    </uib-pagination>
+                <div class="col-md-4">
+                    <ul uib-pagination
+                        total-items="workers.length"
+                        ng-model="currentPage"
+                        class="pagination-sm pull-right"
+                        boundary-links="true"
+                        force-ellipses="false"
+                        rotate="true"
+                        items-per-page="itemsPerPage"
+                        num-pages="numPages"
+                        max-size="5"
+                        previous-text="&lsaquo;"
+                        next-text="&rsaquo;"
+                        first-text="&laquo;"
+                        last-text="&raquo;"
+                        ng-click="setPage(currentPage)"
+                        ng-disabled="paginationDisable">
+                    </ul>
                 </div>
             </div>
         </div>
@@ -296,11 +296,6 @@
                                     </span>
                                 </div>
                             </div>
-                        </uib-tab>
-                        <uib-tab heading="Debug">
-                            <pre>
-                                {{entry | json}}
-                            </pre>
                         </uib-tab>
                     </uib-tabset>
                 </form>
