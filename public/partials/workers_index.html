@@ -108,9 +108,12 @@
                             data-target="#editWorker" aria-label="Add Worker"><span
                             class="glyphicon glyphicon-plus-sign"></span> Add New Worker
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="exportWorkers()"
-                            aria-label="Export Workers"><span class="glyphicon glyphicon-save-file"></span> Export List
-                    </button>
+                    <!--<button type="button" class="btn btn-default" ng-click="exportWorkers()"-->
+                            <!--aria-label="Export Workers"><span class="glyphicon glyphicon-save-file"></span> Export List-->
+                    <!--</button>-->
+                    <a href="/worker/export" class="btn btn-default">
+                        <span class="glyphicon glyphicon-save-file"></span> Export List
+                    </a>
                     <button type="button" class="btn btn-default" ng-click="exportWorkers()"
                             aria-label="Export Workers"><span class="glyphicon glyphicon-copy"></span> Import...
                     </button>
