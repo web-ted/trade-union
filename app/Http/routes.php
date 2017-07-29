@@ -12,6 +12,7 @@
 */
 
 Route::get('worker/import', 'WorkerController@import');
+Route::get('worker/export', 'WorkerController@export');
 Route::get('worker/max', 'WorkerController@nextRegistrationNumber');
 
 Route::get('info', 'TestController@info');
@@ -23,7 +24,7 @@ Route::resource('specialty', 'SpecialtyController');
 Route::resource('enterprise', 'EnterpriseController');
 
 Route::get('/', function () {
-    include 'index.html';
+	include 'index.html';
 });
 
 /*
