@@ -1,0 +1,173 @@
+<div class="container">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li>
+                <a href="#!/dashboard">
+                    Home
+                </a>
+            </li>
+            <li class="active">
+                <a href="#!/specialty">
+                    Specialtys
+                </a>
+            </li>
+        </ol>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Specialtys Index &nbsp;&nbsp;<span ng-click="loadAll()" title="Reload Members Index"
+                                                        class="glyphicon glyphicon-refresh"
+                                                        ng-class="{ 'spin':reloading }" role="button"></span></h5>
+                </div>
+                <div class="col-md-3 col-md-offset-7">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                        <input type="text" class="form-control" ng-change="searching()" ng-model="search">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" title="Clear Search Box" type="button"
+                                    ng-click="clearSearch()">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th ng-click="order('name')" role="button">
+                        <span class="glyphicon" ng-show="predicate === 'name'"
+                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        Name
+                    </th>
+                    <th ng-click="order('description')" role="button">
+                        <span class="glyphicon" ng-show="predicate === 'description'"
+                              ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
+                        Description
+                    </th>
+                </tr>
+                </thead>
+                <tr ng-repeat="member in members | orderBy: predicate : reverse | limitTo: itemsPerPage : begin | filter: search">
+                    <td>{{member.name}}</td>
+                    <td>{{member.description}}</td>
+                    <td>
+                        <button title="Edit Member" type="button" class="btn btn-primary btn-sm"
+                                aria-label="Edit Member" ng-click="editMember(member)" data-toggle="modal"
+                                data-target="#editMember">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </button>
+                        <button title="Delete Member" type="button" ng-click="editMember(member)"
+                                class="btn btn-danger btn-sm" aria-label="Delete Specialty" data-toggle="modal"
+                                data-target="#confirmMemberDeletion">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-md-8">
+                    <button type="button" class="btn btn-primary" ng-click="addMember()" data-toggle="modal"
+                            data-target="#editMember" aria-label="Add Specialty"><span
+                            class="glyphicon glyphicon-plus-sign"></span> Add New Specialty
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="exportSpecialtys()"
+                            aria-label="Export Specialtys"><span class="glyphicon glyphicon-save-file"></span> Export List
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="exportSpecialtys()"
+                            aria-label="Export Specialtys"><span class="glyphicon glyphicon-copy"></span> Import...
+                    </button>
+                    <!--Showing {{itemsPerPage}} specialtys per page-->
+                </div>
+                <div class="col-md-4" ng-show="showPagination">
+                    <ul uib-pagination
+                            total-items="specialtys.length"
+                            ng-model="currentPage"
+                            class="pagination-sm pull-right"
+                            boundary-links="true"
+                            force-ellipses="false"
+                            rotate="true"
+                            items-per-page="itemsPerPage"
+                            num-pages="numPages"
+                            max-size="5"
+                            previous-text="&lsaquo;"
+                            next-text="&rsaquo;"
+                            first-text="&laquo;"
+                            last-text="&raquo;"
+                            ng-click="setPage(currentPage)"
+                            ng-disabled="paginationDisable">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Specialty Modal -->
+<div class="modal fade" id="editMember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" ng-show="action == 'update'">Update: {{entry.name}} ({{entry.id}})</h4>
+                <h4 class="modal-title" ng-show="action == 'create'">Create New Specialty Entry</h4>
+            </div>
+            <div class="modal-body">
+                <form name="EditMemberForm">
+                    <div class="form-group">
+                        <label for="memberName">Name</label>
+                        <input ng-model="entry.name" ng-required="true" class="form-control"
+                               id="memberName" placeholder="Enter Specialty Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="memberDescription">Description</label>
+                        <input ng-model="entry.description" class="form-control"
+                               id="memberDescription" placeholder="Enter Description">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="action == 'update'"
+                        ng-click="updateMember(entry)" ng-disabled="!EditMemberForm.$valid">Save changes
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="action == 'create'"
+                        ng-click="createMember(entry)" ng-disabled="!EditMemberForm.$valid">Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm Specialty Deletion Modal -->
+<div class="modal fade" id="confirmMemberDeletion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="confirmLabel">Confirm Deletion</h4>
+            </div>
+            <div class="modal-body">
+                Delete member {{entry.name}} ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteMember(entry)">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

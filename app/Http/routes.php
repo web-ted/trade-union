@@ -15,6 +15,7 @@ Route::get('worker/import', 'WorkerController@import');
 Route::get('worker/export', 'WorkerController@export');
 Route::get('worker/max', 'WorkerController@nextRegistrationNumber');
 Route::get('report/exportAll', 'ReportController@exportAll');
+Route::get('specialty/test', 'SpecialtyController@test');
 
 Route::resource('worker', 'WorkerController');
 
