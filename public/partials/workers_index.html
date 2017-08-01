@@ -108,16 +108,9 @@
                             data-target="#editWorker" aria-label="Add Worker"><span
                             class="glyphicon glyphicon-plus-sign"></span> Add New Worker
                     </button>
-                    <!--<button type="button" class="btn btn-default" ng-click="exportWorkers()"-->
-                            <!--aria-label="Export Workers"><span class="glyphicon glyphicon-save-file"></span> Export List-->
-                    <!--</button>-->
                     <a href="/worker/export" class="btn btn-default">
-                        <span class="glyphicon glyphicon-save-file"></span> Export List
+                        <span class="glyphicon glyphicon-export"></span> Export Workers
                     </a>
-                    <button type="button" class="btn btn-default" ng-click="exportWorkers()"
-                            aria-label="Export Workers"><span class="glyphicon glyphicon-copy"></span> Import...
-                    </button>
-                    <!--Showing {{itemsPerPage}} workers per page-->
                 </div>
                 <div class="col-md-4">
                     <ul uib-pagination
@@ -216,7 +209,6 @@
                                            uib-datepicker-popup="yyyy-MM-dd" is-open="registrationDateOpened"
                                            class="form-control" id="workerRegisteredAt"
                                            placeholder="Pick registration date with the picker">
-                                    <!--<input ng-model="entry.registered_at" type="text" readonly uib-datepicker-popup="yyyy-MM-dd" is-open="registrationDateOpened" class="form-control" id="workerRegisteredAt" placeholder="Pick registration date with the picker">-->
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default"
                                                 ng-click="registrationDateOpened=1">
