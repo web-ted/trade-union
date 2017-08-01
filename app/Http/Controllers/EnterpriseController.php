@@ -182,4 +182,14 @@ class EnterpriseController extends Controller
 		return response()->json($jsonResponse['response'], $jsonResponse['status']);
 	}
 
+	public function export()
+	{
+		Excel::create('Members List', function ($excel) {
+			$excel->sheet('Enterprises', function ($sheet) {
+				$sheet->setOrientation('landscape');
+				$sheet->loadView('excel.enterprises', ['members' => Enterprise::all()]);
+			});
+		})->download('xlsx');
+	}
+
 }
