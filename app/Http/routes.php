@@ -14,14 +14,14 @@
 Route::get('worker/import', 'WorkerController@import');
 Route::get('worker/export', 'WorkerController@export');
 Route::get('worker/max', 'WorkerController@nextRegistrationNumber');
-
-Route::get('info', 'TestController@info');
+Route::get('report/exportAll', 'ReportController@exportAll');
 
 Route::resource('worker', 'WorkerController');
 
 Route::resource('specialty', 'SpecialtyController');
 
 Route::resource('enterprise', 'EnterpriseController');
+
 
 Route::get('/', function () {
 	include 'index.html';
