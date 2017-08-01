@@ -187,7 +187,7 @@ class EnterpriseController extends Controller
 		Excel::create('Members List', function ($excel) {
 			$excel->sheet('Enterprises', function ($sheet) {
 				$sheet->setOrientation('landscape');
-				$sheet->loadView('excel.enterprises', ['members' => Enterprise::all()]);
+				$sheet->loadView('excel.enterprises', ['members' => self::all()]);
 			});
 		})->download('xlsx');
 	}
