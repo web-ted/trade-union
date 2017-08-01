@@ -19,7 +19,6 @@ class WorkerController extends Controller
 	 */
 	public function index()
 	{
-		// return Worker::all();
 		return Worker::with(['specialty', 'enterprise'])->get();
 	}
 
@@ -268,7 +267,7 @@ class WorkerController extends Controller
 			$excel->sheet('Workers', function ($sheet) {
 				$sheet->setOrientation('landscape');
 				$sheet->freezeFirstRow();
-				$sheet->loadView('excel.workers', ['members' => Worker::all()]);
+				$sheet->loadView('excel.workers', ['members' => self::all()]);
 			});
 		})->download('xlsx');
 	}
