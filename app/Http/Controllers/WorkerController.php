@@ -7,12 +7,8 @@ use App\Specialty;
 use App\Worker;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
-use Mockery\Exception;
 
 class WorkerController extends Controller
 {
@@ -272,17 +268,7 @@ class WorkerController extends Controller
 			$excel->sheet('Workers', function ($sheet) {
 				$sheet->setOrientation('landscape');
 				$sheet->freezeFirstRow();
-				$sheet->fromArray(Worker::all()->toArray());
-			});
-
-			$excel->sheet('Enterprises', function ($sheet) {
-				$sheet->setOrientation('landscape');
-				$sheet->fromArray(Enterprise::all()->toArray());
-			});
-
-			$excel->sheet('Specialties', function ($sheet) {
-				$sheet->setOrientation('landscape');
-				$sheet->fromArray(Specialty::all()->toArray());
+				$sheet->loadView('excel.workers', ['members' => Worker::all()]);
 			});
 		})->download('xlsx');
 	}
