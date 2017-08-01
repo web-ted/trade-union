@@ -11,4 +11,9 @@ class Enterprise extends Model
 
     protected $dates = ['deleted_at'];
     protected $fillable = [ 'name' ];
+
+	public function workers()
+	{
+		return $this->hasMany('App\Worker');
+	}
 }

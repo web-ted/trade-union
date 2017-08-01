@@ -151,6 +151,10 @@ class EnterpriseController extends Controller
 	{
 		try {
 			$enterprise = Enterprise::findOrFail($id);
+			$count = $enterprise->workers->count();
+			if($count > 0) {
+				throw new \Exception("Cannot remove Enterprise '{$enterprise->name}'. $count workers belong to it");
+			}
 			$enterprise->delete();
 
 			$jsonResponse = [
