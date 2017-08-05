@@ -152,7 +152,7 @@ angular.module('TradeUnion')
 
         $scope.loadAll();
     })
-    .controller('SpecialtysController', function ($scope, $filter, toastr, Specialty) {
+    .controller('EnterprisesController', function ($scope, $filter, toastr, Enterprise) {
         $scope.currentPage = 1;
         $scope.begin = 0;
         $scope.itemsPerPage = 5;
@@ -172,7 +172,7 @@ angular.module('TradeUnion')
         $scope.reloadMembers = function() {
             var members, membersRefined = [];
             $scope.reloading = true;
-            members =  Specialty.query({}, function() {
+            members =  Enterprise.query({}, function() {
                 angular.forEach(members, function (value) {
                     value.founded = new Date(value.founded);
                     value.created_at = new Date(value.created_at);
@@ -221,7 +221,7 @@ angular.module('TradeUnion')
         };
 
         $scope.updateMember = function (record) {
-            Specialty.update({id: record.id}, record, function (response) {
+            Enterprise.update({id: record.id}, record, function (response) {
                 var status = response.status || 'Success',
                     message = response.message || "Removed successfully";
 
@@ -237,7 +237,7 @@ angular.module('TradeUnion')
         };
 
         $scope.createMember = function (record) {
-            var newRecord = new Specialty(record);
+            var newRecord = new Enterprise(record);
             newRecord.$save(record, function (response) {
                 var status = response.status || 'Success',
                     message = response.message || "Removed successfully";
