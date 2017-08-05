@@ -5,15 +5,10 @@ namespace App\Http\Controllers;
 use App\Specialty;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SpecialtyController extends Controller
 {
-	public function test()
-	{
-		$specialty = Specialty::find(10);
-		return response()->json(['count' => $specialty->workers->count()]);
-	}
-
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -220,7 +215,7 @@ class SpecialtyController extends Controller
 		Excel::create('Members List', function ($excel) {
 			$excel->sheet('Specialties', function ($sheet) {
 				$sheet->setOrientation('landscape');
-				$sheet->loadView('excel.specialties', ['members' => self::all()]);
+				$sheet->loadView('excel.specialties', ['members' => Specialty::all()]);
 			});
 		})->download('xlsx');
 	}
