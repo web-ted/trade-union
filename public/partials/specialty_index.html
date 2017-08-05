@@ -8,7 +8,7 @@
             </li>
             <li class="active">
                 <a href="#!/specialty">
-                    Specialtys
+                    Specialties
                 </a>
             </li>
         </ol>
@@ -17,7 +17,7 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-2">
-                    <h5>Specialtys Index &nbsp;&nbsp;<span ng-click="loadAll()" title="Reload Members Index"
+                    <h5>Specialties Index &nbsp;&nbsp;<span ng-click="loadAll()" title="Reload Members Index"
                                                         class="glyphicon glyphicon-refresh"
                                                         ng-class="{ 'spin':reloading }" role="button"></span></h5>
                 </div>
@@ -81,13 +81,9 @@
                             data-target="#editMember" aria-label="Add Specialty"><span
                             class="glyphicon glyphicon-plus-sign"></span> Add New Specialty
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="exportSpecialtys()"
-                            aria-label="Export Specialtys"><span class="glyphicon glyphicon-save-file"></span> Export List
-                    </button>
-                    <button type="button" class="btn btn-default" ng-click="exportSpecialtys()"
-                            aria-label="Export Specialtys"><span class="glyphicon glyphicon-copy"></span> Import...
-                    </button>
-                    <!--Showing {{itemsPerPage}} specialtys per page-->
+                    <a href="/specialty/export" class="btn btn-default">
+                        <span class="glyphicon glyphicon-export"></span> Export Specialties
+                    </a>
                 </div>
                 <div class="col-md-4" ng-show="showPagination">
                     <ul uib-pagination
