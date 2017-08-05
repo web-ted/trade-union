@@ -267,7 +267,7 @@ class WorkerController extends Controller
 			$excel->sheet('Workers', function ($sheet) {
 				$sheet->setOrientation('landscape');
 				$sheet->freezeFirstRow();
-				$sheet->loadView('excel.workers', ['members' => self::all()]);
+				$sheet->loadView('excel.workers', ['members' => Worker::all()]);
 			});
 		})->download('xlsx');
 	}
