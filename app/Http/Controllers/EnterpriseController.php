@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Enterprise;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EnterpriseController extends Controller
 {
@@ -191,7 +192,7 @@ class EnterpriseController extends Controller
 		Excel::create('Members List', function ($excel) {
 			$excel->sheet('Enterprises', function ($sheet) {
 				$sheet->setOrientation('landscape');
-				$sheet->loadView('excel.enterprises', ['members' => self::all()]);
+				$sheet->loadView('excel.enterprises', ['members' => Enterprise::all()]);
 			});
 		})->download('xlsx');
 	}
