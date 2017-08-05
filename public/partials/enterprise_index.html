@@ -17,7 +17,7 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-md-2">
-                    <h5>Workers Index &nbsp;&nbsp;<span ng-click="loadAll()" title="Reload Members Index"
+                    <h5>Enterprise Index &nbsp;&nbsp;<span ng-click="loadAll()" title="Reload Members Index"
                                                         class="glyphicon glyphicon-refresh"
                                                         ng-class="{ 'spin':reloading }" role="button"></span></h5>
                 </div>
@@ -90,13 +90,9 @@
                             data-target="#editMember" aria-label="Add Enterprise"><span
                             class="glyphicon glyphicon-plus-sign"></span> Add New Enterprise
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="exportWorkers()"
-                            aria-label="Export Workers"><span class="glyphicon glyphicon-save-file"></span> Export List
-                    </button>
-                    <button type="button" class="btn btn-default" ng-click="exportWorkers()"
-                            aria-label="Export Workers"><span class="glyphicon glyphicon-copy"></span> Import...
-                    </button>
-                    <!--Showing {{itemsPerPage}} workers per page-->
+                    <a href="/enterprise/export" class="btn btn-default">
+                        <span class="glyphicon glyphicon-export"></span> Export Enterprises
+                    </a>
                 </div>
                 <div class="col-md-4" ng-show="showPagination">
                     <ul uib-pagination
