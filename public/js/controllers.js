@@ -2,7 +2,7 @@
  * Created by sulimo on 17/1/2016.
  */
 angular.module('TradeUnion')
-    .controller('WorkersController', function ($scope, $filter, toastr, Worker, Specialty, Specialty) {
+    .controller('WorkersController', function ($scope, $filter, toastr, Worker, Specialty, Enterprise) {
         var handleFailure = function(response) {
             var data = response.data,
                 status = data.status || 'Error',
@@ -50,8 +50,8 @@ angular.module('TradeUnion')
                 $scope.specialties = angular.copy(response);
             });
 
-            Specialty.query({}, function (response) {
-                $scope.specialtys = angular.copy(response);
+            Enterprise.query({}, function (response) {
+                $scope.enterprises = angular.copy(response);
             });
         };
 
