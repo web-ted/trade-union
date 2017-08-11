@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enterprise;
-use App\Specialty;
 use App\Worker;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
