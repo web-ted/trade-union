@@ -16,6 +16,9 @@ angular.module('TradeUnion', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngAnimat
                 templateUrl: 'partials/specialty_index.html',
                 controller: 'SpecialtiesController'
             })
+            .when('/report', {
+                templateUrl: 'partials/report.html'
+            })
             .otherwise({
                 redirectTo: '/worker'
             });
