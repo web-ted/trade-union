@@ -46,8 +46,10 @@
         <td>{{\Carbon\Carbon::parse($member->hire_date)->format('d-m-Y')}}</td>
         <td>{{$member->insurance_number}}</td>
         <td>{{$member->comment}}</td>
-        <td>{{$member->enterprise->name}}</td>
-        <td>{{$member->specialty->name}}</td>
+        <td>{{isset($member->enterprise) ? $member->enterprise->name : ''}}</td>
+{{--        <td>{{$member->enterprise->name ?? ''}}</td>--}}
+        <td>{{isset($member->specialty) ? $member->specialty->name : ''}}</td>
+{{--        <td>{{$member->specialty->name ?? '' }}</td>--}}
         {{--<td>{{$member->created_at}}</td>--}}
         {{--<td>{{$member->updated_at}}</td>--}}
         {{--<td>{{$member->deleted_at}}</td>--}}
