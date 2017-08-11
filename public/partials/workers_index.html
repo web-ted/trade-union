@@ -47,7 +47,7 @@
                     <th ng-click="order('registration_number')" role="button">
                         <span class="glyphicon" ng-show="predicate === 'registration_number'"
                               ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
-                        Registration Number
+                        #
                     </th>
                     <th ng-click="order('first_name')" role="button">
                         <span class="glyphicon" ng-show="predicate === 'first_name'"
@@ -72,7 +72,7 @@
                     <th ng-click="order('mobile_phone')" role="button">
                         <span class="glyphicon" ng-show="predicate === 'mobile_phone'"
                               ng-class="{'glyphicon-chevron-down':reverse, 'glyphicon-chevron-up':(!reverse)}"></span>
-                        Cell Phone
+                        Phone
                     </th>
                     <th>
                         Actions
@@ -85,7 +85,7 @@
                     <td>{{worker.last_name}}</td>
                     <td>{{worker.enterprise.name}}</td>
                     <td>{{worker.specialty.name}}</td>
-                    <td>{{worker.mobile_phone}}</td>
+                    <td>{{worker.mobile_phone}} {{worker.phone}}</td>
                     <td>
                         <button title="Edit Member" type="button" class="btn btn-primary btn-sm"
                                 aria-label="Edit Worker" ng-click="editWorker(worker)" data-toggle="modal"
