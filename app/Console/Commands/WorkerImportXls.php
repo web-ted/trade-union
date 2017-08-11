@@ -46,14 +46,20 @@ class WorkerImportXls extends Command
 	{
 		$filename = base_path('files') . DIRECTORY_SEPARATOR . 'mitroo.xlsx';
 		$this->info('Reading xlsx file: ' . $filename);
-		$rs = Excel::load($filename, function ($reader) {
-		})->get();
+		$rs = Excel::load($filename, function ($reader) {})->get();
 
-		$this->info('Starting importing: ' . $rs->count() . ' rows');
 
+		$this->info('Truncating main tables: workers, enterprises, specialties');
 		DB::table('workers')->truncate();
-		Worker::unguard();
+		DB::table('enterprises')->truncate();
+		DB::table('specialties')->truncate();
 
+		$this->info('Preparing tables for data import');
+		Worker::unguard();
+		Enterprise::unguard();
+		Specialty::unguard();
+
+		$this->info('Trying to import: '.$rs->count().' rows');
 		foreach ($rs as $row) {
 			list($surname, $name) = explode(' ', $row['onomatepwnymo']);
 			if (!empty($row['epaggelma'])) {
