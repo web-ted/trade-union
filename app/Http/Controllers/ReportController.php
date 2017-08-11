@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\Worker;
+use App\Enterprise;
+use App\Specialty;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
