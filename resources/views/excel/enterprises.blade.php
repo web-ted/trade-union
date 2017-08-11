@@ -9,9 +9,9 @@
     <td>Email</td>
     <td>City</td>
     <td>Founded</td>
-    <td>Workers_number</td>
+    <td>Workers Number</td>
     <td>Owners</td>
-    <td>Business_activity</td>
+    <td>Business Activity</td>
     {{--<td>Deleted At</td>--}}
     {{--<td>Created At</td>--}}
     {{--<td>Updated At</td>--}}
